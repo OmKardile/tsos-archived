@@ -13,7 +13,7 @@ export interface AuthRequest extends Request {
   user?: AuthUser;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'tsos-dev-jwt-secret';
+const JWT_SECRET = process.env.JWT_SECRET || 'tsos-dev-jwt-secret-change-in-production';
 
 export function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
   const header = req.headers.authorization;
