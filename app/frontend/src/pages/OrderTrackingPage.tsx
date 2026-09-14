@@ -6,6 +6,7 @@ import { Clock, CheckCircle, ChefHat, Package } from 'lucide-react';
 
 interface OrderStatus {
   id: string;
+  location_id: string;
   status: string;
   order_type: string;
   grand_total: number;
@@ -40,6 +41,11 @@ export default function OrderTrackingPage() {
     if (!order) return;
     const socket = createSocket();
 
+    // Join location room for real-time updates
+    if (order.location_id) {
+      socket.emit('join_location', order.location_id);
+    }
+
     socket.on('order:status_changed', (data: { orderId: string; status: string }) => {
       if (data.orderId === orderId) {
         setOrder(prev => prev ? { ...prev, status: data.status, updated_at: new Date().toISOString() } : prev);
@@ -47,7 +53,7 @@ export default function OrderTrackingPage() {
     });
 
     return () => { socket.disconnect(); };
-  }, [orderId]);
+  }, [orderId, order?.location_id]);
 
   if (loading) return <div className="min-h-screen bg-gray-50 flex items-center justify-center animate-pulse text-gray-400">Loading...</div>;
   if (error) return <div className="min-h-screen bg-gray-50 flex items-center justify-center text-red-500">{error}</div>;

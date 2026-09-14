@@ -59,9 +59,22 @@ export function requireLocationAccess(req: AuthRequest, res: Response, next: Nex
   next();
 }
 
+function parseExpiresIn(val: string): number {
+  const match = val.match(/^(\d+)([smhd])$/);
+  if (!match) return parseInt(val, 10) || 604800;
+  const n = parseInt(match[1], 10);
+  switch (match[2]) {
+    case 's': return n;
+    case 'm': return n * 60;
+    case 'h': return n * 3600;
+    case 'd': return n * 86400;
+    default: return 604800;
+  }
+}
+
 export function generateToken(user: { id: string; business_id: string; role: string }, locationIds: string[]) {
   const options: SignOptions = {
-    expiresIn: parseInt(process.env.JWT_EXPIRES_IN || '604800', 10), // 7 days in seconds
+    expiresIn: parseExpiresIn(process.env.JWT_EXPIRES_IN || '7d'),
   };
   return jwt.sign(
     {

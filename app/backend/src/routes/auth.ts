@@ -181,7 +181,8 @@ router.get('/me', async (req: Request, res: Response) => {
 
   try {
     const jwt = await import('jsonwebtoken');
-    const payload = jwt.default.verify(authHeader.slice(7), process.env.JWT_SECRET || '') as any;
+    const JWT_SECRET = process.env.JWT_SECRET || 'tsos-dev-jwt-secret-change-in-production';
+    const payload = jwt.default.verify(authHeader.slice(7), JWT_SECRET) as any;
 
     const result = await query(
       `SELECT u.id, u.email, u.name, u.role, u.business_id, b.name as business_name

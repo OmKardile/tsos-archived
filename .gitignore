@@ -8,6 +8,7 @@ firebase-adminsdk.json
 google-services.json
 GoogleService-Info.plist
 *.exe
-app/native-windows/
+app/native-windows/bin/
+app/native-windows/obj/
 app/backend/dist/
 app/electron/dist-electron/

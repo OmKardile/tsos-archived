@@ -12,6 +12,7 @@ interface MenuItem {
   is_veg: boolean;
   is_available: boolean;
   category_name: string;
+  tax_rate_pct: number;
   variants: { id: string; name: string; priceDelta: number }[];
   addons: { id: string; name: string; price: number }[];
 }
@@ -94,7 +95,10 @@ export default function POSPage() {
   }, 0);
 
   const taxTotal = cart.reduce((sum, item) => {
-    return sum + (item.menuItem.price * item.qty * 0.05);
+    const basePrice = item.menuItem.price + (item.variant?.priceDelta || 0);
+    const addonTotal = item.addons.reduce((s, a) => s + a.price, 0);
+    const taxRate = (item.menuItem.tax_rate_pct || 5) / 100;
+    return sum + ((basePrice + addonTotal) * item.qty * taxRate);
   }, 0);
 
   const grandTotal = subtotal + taxTotal - discount;
@@ -234,7 +238,7 @@ export default function POSPage() {
                       <Plus className="w-3 h-3" />
                     </button>
                   </div>
-                  <span className="text-sm font-semibold">₹{(Number(item.menuItem.price) * item.qty).toFixed(0)}</span>
+                  <span className="text-sm font-semibold">₹{((Number(item.menuItem.price) + (item.variant?.priceDelta || 0) + item.addons.reduce((s, a) => s + a.price, 0)) * item.qty).toFixed(0)}</span>
                 </div>
               </div>
             ))

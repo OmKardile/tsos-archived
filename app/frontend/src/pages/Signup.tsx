@@ -15,7 +15,7 @@ export default function Signup() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useStore();
+  const { setUser, setLocations, setActiveLocationId } = useStore();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,6 +30,14 @@ export default function Signup() {
       const data = await api.post('/auth/signup', form);
       localStorage.setItem('tsos_token', data.token);
       setUser(data.user);
+
+      // Fetch locations after signup
+      const locs = await api.get('/locations');
+      setLocations(locs);
+      if (locs.length > 0) {
+        setActiveLocationId(locs[0].id);
+      }
+
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Signup failed');

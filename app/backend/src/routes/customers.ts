@@ -78,7 +78,7 @@ router.get('/offers/list', async (req: AuthRequest, res: Response) => {
   }
 
   const result = await query(
-    `SELECT * FROM offers WHERE location_id = $1 ORDER BY created_at DESC`,
+    `SELECT * FROM offers WHERE location_id = $1 ORDER BY valid_from DESC`,
     [locationId]
   );
   res.json(result.rows);

@@ -1,0 +1,12 @@
+<Page x:Class="TSOS.POS.Views.KDSPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+    <DockPanel Margin="24">
+        <Button DockPanel.Dock="Top" Content="🔄 Refresh" HorizontalAlignment="Right" 
+                Click="Refresh_Click" Background="Transparent" BorderThickness="0" 
+                FontSize="12" Margin="0,0,0,12" Cursor="Hand"/>
+        
+        <WrapPanel x:Name="OrdersPanel"/>
+    </DockPanel>
+</Page>

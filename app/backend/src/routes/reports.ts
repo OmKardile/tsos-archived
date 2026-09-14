@@ -28,21 +28,25 @@ router.get('/summary', async (req: AuthRequest, res: Response) => {
 
   let where = '';
   const params: unknown[] = [];
+  let paramIdx = 1;
+
   if (locationId) {
-    where = `AND location_id = $1`;
+    where = `AND location_id = $${paramIdx++}`;
     params.push(locationId);
   }
 
+  const businessId = req.user!.business_id;
+
   const result = await query(
     `SELECT
-       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND created_at >= ${interval}) as total_orders,
-       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND created_at >= ${prevInterval} AND created_at < ${interval}) as prev_orders,
-       (SELECT COALESCE(SUM(grand_total), 0) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND created_at >= ${interval} AND payment_status = 'paid') as total_revenue,
-       (SELECT COALESCE(SUM(grand_total), 0) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND created_at >= ${prevInterval} AND created_at < ${interval} AND payment_status = 'paid') as prev_revenue,
-       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND status IN ('new','preparing')) as pending_orders,
-       (SELECT COUNT(DISTINCT customer_id) FROM orders WHERE 1=1 ${where.replace('AND', 'AND')} AND created_at >= ${interval} AND customer_id IS NOT NULL) as active_customers,
-       (SELECT COUNT(*) FROM customers WHERE business_id = $${params.length > 0 ? 2 : 1}) as total_customers`,
-    params
+       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where} AND created_at >= ${interval}) as total_orders,
+       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where} AND created_at >= ${prevInterval} AND created_at < ${interval}) as prev_orders,
+       (SELECT COALESCE(SUM(grand_total), 0) FROM orders WHERE 1=1 ${where} AND created_at >= ${interval} AND payment_status = 'paid') as total_revenue,
+       (SELECT COALESCE(SUM(grand_total), 0) FROM orders WHERE 1=1 ${where} AND created_at >= ${prevInterval} AND created_at < ${interval} AND payment_status = 'paid') as prev_revenue,
+       (SELECT COUNT(*) FROM orders WHERE 1=1 ${where} AND status IN ('new','preparing')) as pending_orders,
+       (SELECT COUNT(DISTINCT customer_id) FROM orders WHERE 1=1 ${where} AND created_at >= ${interval} AND customer_id IS NOT NULL) as active_customers,
+       (SELECT COUNT(*) FROM customers WHERE business_id = $${paramIdx}) as total_customers`,
+    [...params, businessId]
   );
 
   const row = result.rows[0];

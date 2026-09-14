@@ -1,0 +1,76 @@
+<Page x:Class="TSOS.POS.Views.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Background="Transparent">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="24">
+        <StackPanel>
+            <Grid Margin="0,0,0,24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" Style="{StaticResource CardBorder}" Margin="0,0,8,0">
+                    <StackPanel>
+                        <TextBlock Text="Total Orders" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="TotalOrders" Text="—" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource CardBorder}" Margin="4,0">
+                    <StackPanel>
+                        <TextBlock Text="Revenue" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="Revenue" Text="—" FontSize="28" FontWeight="Bold" Foreground="{StaticResource PrimaryBrush}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="2" Style="{StaticResource CardBorder}" Margin="4,0">
+                    <StackPanel>
+                        <TextBlock Text="Pending Orders" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="PendingOrders" Text="—" FontSize="28" FontWeight="Bold" Foreground="{StaticResource WarningBrush}" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+                <Border Grid.Column="3" Style="{StaticResource CardBorder}" Margin="8,0,0,0">
+                    <StackPanel>
+                        <TextBlock Text="Active Customers" FontSize="13" Foreground="{StaticResource TextSecondaryBrush}"/>
+                        <TextBlock x:Name="ActiveCustomers" Text="—" FontSize="28" FontWeight="Bold" Margin="0,4,0,0"/>
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource CardBorder}">
+                <StackPanel>
+                    <TextBlock Text="Recent Orders" FontSize="16" FontWeight="SemiBold" Margin="0,0,0,12"/>
+                    <TextBlock x:Name="NoOrdersText" Text="No orders yet today" 
+                               Foreground="{StaticResource TextSecondaryBrush}" FontSize="13"/>
+                    <ItemsControl x:Name="OrdersList">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Padding="12,10" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding OrderType}" FontWeight="SemiBold" FontSize="13"/>
+                                            <TextBlock FontSize="11" Foreground="{StaticResource TextSecondaryBrush}">
+                                                <Run Text="{Binding Id, StringFormat='#{0}'}"/>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+                                            <TextBlock FontWeight="SemiBold" FontSize="13">
+                                                <Run Text="{Binding Total, StringFormat='₹{0:F0}'}"/>
+                                            </TextBlock>
+                                            <TextBlock Text="{Binding Status}" FontSize="11" 
+                                                       Foreground="{StaticResource TextSecondaryBrush}" TextAlignment="Right"/>
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
