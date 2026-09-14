@@ -23,14 +23,20 @@ import settingsRoutes from './routes/settings.js';
 const app = express();
 const server = createServer(app);
 
+const ALLOWED_ORIGINS = [
+  'http://localhost:5173',
+  'http://localhost:3000',
+  'https://tsos-frontend.onrender.com',
+];
+
 const io = new SocketServer(server, {
   cors: {
-    origin: ['http://localhost:5173', 'http://localhost:3000'],
+    origin: ALLOWED_ORIGINS,
     credentials: true,
   },
 });
 
-app.use(cors({ origin: ['http://localhost:5173', 'http://localhost:3000'], credentials: true }));
+app.use(cors({ origin: ALLOWED_ORIGINS, credentials: true }));
 app.use(express.json());
 
 // Make io available to routes

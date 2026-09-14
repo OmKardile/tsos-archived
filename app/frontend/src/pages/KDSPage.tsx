@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { api } from '../lib/api';
 import { useStore } from '../lib/store';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
+import { createSocket } from '../lib/socket';
 import { ArrowRight, Check } from 'lucide-react';
 
 interface Order {
@@ -45,7 +46,7 @@ export default function KDSPage() {
 
   useEffect(() => {
     if (!activeLocationId) return;
-    const socket = io(window.location.origin, { path: '/socket.io' });
+    const socket = createSocket();
     socket.emit('join_location', activeLocationId);
     socketRef.current = socket;
 

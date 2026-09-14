@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { api } from '../lib/api';
-import { io } from 'socket.io-client';
+import { createSocket } from '../lib/socket';
 import { Clock, CheckCircle, ChefHat, Package } from 'lucide-react';
 
 interface OrderStatus {
@@ -38,7 +38,7 @@ export default function OrderTrackingPage() {
 
   useEffect(() => {
     if (!order) return;
-    const socket = io(window.location.origin, { path: '/socket.io' });
+    const socket = createSocket();
 
     socket.on('order:status_changed', (data: { orderId: string; status: string }) => {
       if (data.orderId === orderId) {

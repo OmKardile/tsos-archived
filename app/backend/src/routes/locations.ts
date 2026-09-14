@@ -19,7 +19,7 @@ router.get('/', async (req: AuthRequest, res: Response) => {
 });
 
 router.get('/:id/dashboard-summary', async (req: AuthRequest, res: Response) => {
-  const { id } = req.params;
+  const id = req.params.id as string;
   if (!req.user!.location_ids.includes(id)) {
     return res.status(403).json({ error: 'No access to this location' });
   }

@@ -8,13 +8,22 @@ export async function initFirebase() {
   if (initialized) return;
 
   try {
-    // Dynamic import to handle ESM/CJS compatibility
     const firebaseAdmin = await import('firebase-admin/app');
     const { cert } = await import('firebase-admin/app');
 
-    const serviceAccountPath = join(process.cwd(), 'firebase-adminsdk.json');
-    const serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'));
-    console.log('Found Firebase config');
+    let serviceAccount: any;
+
+    // Try env var first (for Render/production), then file (for local dev)
+    if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+      serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+      console.log('Found Firebase config from environment variable');
+    } else {
+      const { readFileSync } = await import('fs');
+      const { join } = await import('path');
+      const serviceAccountPath = join(process.cwd(), 'firebase-adminsdk.json');
+      serviceAccount = JSON.parse(readFileSync(serviceAccountPath, 'utf-8'));
+      console.log('Found Firebase config from file');
+    }
 
     firebaseApp = firebaseAdmin.initializeApp({
       credential: cert(serviceAccount),

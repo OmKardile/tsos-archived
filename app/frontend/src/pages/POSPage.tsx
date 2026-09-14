@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { api } from '../lib/api';
 import { useStore } from '../lib/store';
-import { io, Socket } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
+import { createSocket } from '../lib/socket';
 import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
 
 interface MenuItem {
@@ -50,7 +51,7 @@ export default function POSPage() {
       .finally(() => setLoading(false));
 
     // Socket.io
-    const socket = io(window.location.origin, { path: '/socket.io' });
+    const socket = createSocket();
     socket.emit('join_location', activeLocationId);
     socketRef.current = socket;
 

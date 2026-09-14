@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { query } from '../db/pool.js';
 
 export interface AuthUser {
@@ -60,6 +60,9 @@ export function requireLocationAccess(req: AuthRequest, res: Response, next: Nex
 }
 
 export function generateToken(user: { id: string; business_id: string; role: string }, locationIds: string[]) {
+  const options: SignOptions = {
+    expiresIn: parseInt(process.env.JWT_EXPIRES_IN || '604800', 10), // 7 days in seconds
+  };
   return jwt.sign(
     {
       id: user.id,
@@ -68,6 +71,6 @@ export function generateToken(user: { id: string; business_id: string; role: str
       location_ids: locationIds,
     },
     JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+    options
   );
 }
