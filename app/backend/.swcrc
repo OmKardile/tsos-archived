@@ -1,0 +1,15 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "decorators": true
+    },
+    "target": "es2022",
+    "externalHelpers": false
+  },
+  "module": {
+    "type": "nodenext",
+    "resolveFullFully": true
+  },
+  "sourceMaps": true
+}
