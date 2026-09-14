@@ -272,6 +272,180 @@ PORT=3001
 # firebase-adminsdk.json in backend root
 ```
 
+## Dummy Data (All 23 Tables)
+
+### businesses
+| id | owner_user_id | name | created_at |
+|----|--------------|------|------------|
+| uuid-001 | uuid-user-01 | Demo Cafe | 2026-09-14 |
+
+### locations
+| id | business_id | name | slug | address | phone | timezone | is_active |
+|----|-------------|------|------|---------|-------|----------|-----------|
+| uuid-loc-01 | uuid-001 | Main Branch | main-branch | 123 MG Road, Bangalore | +919876543210 | Asia/Kolkata | true |
+
+### users
+| id | business_id | name | email | phone | password_hash | pin_code | role | is_active |
+|----|-------------|------|-------|-------|---------------|----------|------|-----------|
+| uuid-user-01 | uuid-001 | Admin | admin@tsos.dev | — | $2a$10$... | 1234 | owner | true |
+
+### user_locations
+| user_id | location_id |
+|---------|-------------|
+| uuid-user-01 | uuid-loc-01 |
+
+### menu_categories
+| id | location_id | name | sort_order | is_active |
+|----|-------------|------|------------|-----------|
+| uuid-cat-01 | uuid-loc-01 | Coffee | 1 | true |
+| uuid-cat-02 | uuid-loc-01 | Tea | 2 | true |
+| uuid-cat-03 | uuid-loc-01 | Snacks | 3 | true |
+| uuid-cat-04 | uuid-loc-01 | Pastries | 4 | true |
+
+### menu_items
+| id | location_id | category_id | name | description | price | is_veg | tax_rate_pct | is_available |
+|----|-------------|-------------|------|-------------|-------|--------|--------------|--------------|
+| uuid-item-01 | uuid-loc-01 | uuid-cat-01 | Espresso | Strong single shot | 120.00 | true | 5 | true |
+| uuid-item-02 | uuid-loc-01 | uuid-cat-01 | Cappuccino | Espresso with steamed milk | 150.00 | true | 5 | true |
+| uuid-item-03 | uuid-loc-01 | uuid-cat-01 | Latte | Smooth espresso with milk | 160.00 | true | 5 | true |
+| uuid-item-04 | uuid-loc-01 | uuid-cat-02 | Masala Chai | Traditional spiced tea | 60.00 | true | 5 | true |
+| uuid-item-05 | uuid-loc-01 | uuid-cat-02 | Green Tea | Light and refreshing | 50.00 | true | 5 | true |
+| uuid-item-06 | uuid-loc-01 | uuid-cat-03 | Samosa | Crispy pastry with potato filling | 40.00 | true | 5 | true |
+| uuid-item-07 | uuid-loc-01 | uuid-cat-03 | Vada Pav | Mumbai street food classic | 50.00 | true | 5 | true |
+| uuid-item-08 | uuid-loc-01 | uuid-cat-03 | Sandwich | Grilled veg sandwich | 80.00 | true | 5 | true |
+
+### menu_item_variants
+| id | menu_item_id | name | price_delta |
+|----|--------------|------|-------------|
+| uuid-var-01 | uuid-item-01 | Single | 0.00 |
+| uuid-var-02 | uuid-item-01 | Double | 60.00 |
+| uuid-var-03 | uuid-item-02 | Regular | 0.00 |
+| uuid-var-04 | uuid-item-02 | Large | 40.00 |
+
+### addons
+| id | location_id | name | price |
+|----|-------------|------|-------|
+| uuid-addon-01 | uuid-loc-01 | Extra Shot | 30.00 |
+| uuid-addon-02 | uuid-loc-01 | Oat Milk | 40.00 |
+| uuid-addon-03 | uuid-loc-01 | Whipped Cream | 20.00 |
+
+### menu_item_addons
+| menu_item_id | addon_id |
+|--------------|----------|
+| uuid-item-01 | uuid-addon-01 |
+| uuid-item-02 | uuid-addon-01 |
+| uuid-item-02 | uuid-addon-03 |
+| uuid-item-03 | uuid-addon-01 |
+| uuid-item-03 | uuid-addon-02 |
+
+### ingredients
+| id | location_id | name | unit | stock_qty | low_stock_threshold |
+|----|-------------|------|------|-----------|---------------------|
+| uuid-ing-01 | uuid-loc-01 | Coffee Beans | g | 5000 | 500 |
+| uuid-ing-02 | uuid-loc-01 | Milk | ml | 10000 | 1000 |
+| uuid-ing-03 | uuid-loc-01 | Sugar | g | 3000 | 300 |
+| uuid-ing-04 | uuid-loc-01 | Tea Leaves | g | 2000 | 200 |
+| uuid-ing-05 | uuid-loc-01 | Samosa Dough | g | 4000 | 500 |
+| uuid-ing-06 | uuid-loc-01 | Potato | g | 6000 | 1000 |
+| uuid-ing-07 | uuid-loc-01 | Bread | pcs | 50 | 10 |
+
+### recipes
+| menu_item_id | ingredient_id | qty_consumed |
+|--------------|---------------|--------------|
+| uuid-item-01 (Espresso) | uuid-ing-01 (Coffee Beans) | 18g |
+| uuid-item-02 (Cappuccino) | uuid-ing-01 (Coffee Beans) | 18g |
+| uuid-item-02 (Cappuccino) | uuid-ing-02 (Milk) | 150ml |
+| uuid-item-03 (Latte) | uuid-ing-01 (Coffee Beans) | 18g |
+| uuid-item-03 (Latte) | uuid-ing-02 (Milk) | 200ml |
+| uuid-item-04 (Masala Chai) | uuid-ing-04 (Tea Leaves) | 5g |
+| uuid-item-04 (Masala Chai) | uuid-ing-02 (Milk) | 200ml |
+| uuid-item-05 (Green Tea) | uuid-ing-04 (Tea Leaves) | 3g |
+| uuid-item-06 (Samosa) | uuid-ing-05 (Samosa Dough) | 100g |
+| uuid-item-06 (Samosa) | uuid-ing-06 (Potato) | 50g |
+| uuid-item-07 (Vada Pav) | uuid-ing-07 (Bread) | 2pcs |
+| uuid-item-08 (Sandwich) | uuid-ing-07 (Bread) | 2pcs |
+
+### inventory_logs
+| id | ingredient_id | change_qty | reason | ref_order_id | created_at |
+|----|---------------|------------|--------|--------------|------------|
+| uuid-log-01 | uuid-ing-01 | -18 | sale | uuid-order-01 | 2026-09-14 |
+| uuid-log-02 | uuid-ing-02 | -150 | sale | uuid-order-01 | 2026-09-14 |
+| uuid-log-03 | uuid-ing-01 | 5000 | restock | — | 2026-09-14 |
+
+### dine_tables
+| id | location_id | label | qr_token | seats | status |
+|----|-------------|-------|----------|-------|--------|
+| uuid-tbl-01 | uuid-loc-01 | Table 1 | tbl-001 | 4 | free |
+| uuid-tbl-02 | uuid-loc-01 | Table 2 | tbl-002 | 4 | free |
+| uuid-tbl-03 | uuid-loc-01 | Table 3 | tbl-003 | 2 | occupied |
+| uuid-tbl-04 | uuid-loc-01 | Table 4 | tbl-004 | 6 | free |
+| uuid-tbl-05 | uuid-loc-01 | Counter | tbl-ctr | 2 | free |
+
+### orders
+| id | location_id | table_id | customer_id | order_type | status | placed_by | subtotal | tax_total | discount_total | platform_fee | fee_payer | grand_total | payment_status | created_at |
+|----|-------------|----------|-------------|------------|--------|-----------|----------|-----------|----------------|--------------|-----------|-------------|----------------|------------|
+| uuid-order-01 | uuid-loc-01 | uuid-tbl-01 | uuid-cust-01 | dine_in | completed | staff | 270.00 | 13.50 | 0.00 | 1.00 | customer | 284.50 | paid | 2026-09-14 |
+| uuid-order-02 | uuid-loc-01 | uuid-tbl-03 | uuid-cust-02 | dine_in | preparing | staff | 110.00 | 5.50 | 0.00 | 1.00 | customer | 116.50 | paid | 2026-09-14 |
+| uuid-order-03 | uuid-loc-01 | — | uuid-cust-03 | takeaway | new | staff | 200.00 | 10.00 | 20.00 | 1.00 | cafe | 191.00 | paid | 2026-09-14 |
+
+### order_items
+| id | order_id | menu_item_id | variant_id | qty | unit_price | notes |
+|----|----------|--------------|------------|-----|------------|-------|
+| uuid-oi-01 | uuid-order-01 | uuid-item-02 | uuid-var-03 | 1 | 150.00 | — |
+| uuid-oi-02 | uuid-order-01 | uuid-item-06 | — | 3 | 40.00 | — |
+| uuid-oi-03 | uuid-order-02 | uuid-item-07 | — | 1 | 50.00 | Extra chutney |
+| uuid-oi-04 | uuid-order-02 | uuid-item-04 | — | 1 | 60.00 | Less sugar |
+| uuid-oi-05 | uuid-order-03 | uuid-item-01 | uuid-var-02 | 2 | 180.00 | — |
+
+### order_item_addons
+| order_item_id | addon_id |
+|---------------|----------|
+| uuid-oi-01 | uuid-addon-01 |
+
+### payments
+| id | order_id | method | amount | status | gateway_ref | created_at |
+|----|----------|--------|--------|--------|-------------|------------|
+| uuid-pay-01 | uuid-order-01 | upi | 284.50 | success | pay_abc123 | 2026-09-14 |
+| uuid-pay-02 | uuid-order-02 | cash | 116.50 | success | — | 2026-09-14 |
+| uuid-pay-03 | uuid-order-03 | card | 191.00 | success | pay_xyz789 | 2026-09-14 |
+
+### customers
+| id | business_id | name | phone | email | loyalty_points | total_orders | total_spent | created_at |
+|----|-------------|------|-------|-------|----------------|--------------|-------------|------------|
+| uuid-cust-01 | uuid-001 | Rahul Sharma | +919876543211 | rahul@email.com | 28 | 3 | 850.00 | 2026-09-14 |
+| uuid-cust-02 | uuid-001 | Priya Patel | +919876543212 | priya@email.com | 12 | 1 | 116.50 | 2026-09-14 |
+| uuid-cust-03 | uuid-001 | Amit Singh | +919876543213 | amit@email.com | 19 | 2 | 391.00 | 2026-09-14 |
+
+### loyalty_ledger
+| id | customer_id | order_id | points_delta | reason | created_at |
+|----|-------------|----------|--------------|--------|------------|
+| uuid-loy-01 | uuid-cust-01 | uuid-order-01 | 28 | earn | 2026-09-14 |
+| uuid-loy-02 | uuid-cust-02 | uuid-order-02 | 12 | earn | 2026-09-14 |
+| uuid-loy-03 | uuid-cust-03 | uuid-order-03 | 19 | earn | 2026-09-14 |
+
+### offers
+| id | location_id | title | type | value | min_order_value | valid_from | valid_to | is_active |
+|----|-------------|-------|------|-------|-----------------|------------|----------|-----------|
+| uuid-offer-01 | uuid-loc-01 | Welcome Discount | flat | 50.00 | 200.00 | 2026-09-01 | 2026-09-30 | true |
+| uuid-offer-02 | uuid-loc-01 | Monsoon Special | percent | 10.00 | 150.00 | 2026-06-01 | 2026-09-30 | true |
+| uuid-offer-03 | uuid-loc-01 | Buy 1 Get 1 Coffee | bogo | 150.00 | 0.00 | 2026-09-01 | 2026-09-14 | true |
+
+### location_fee_config
+| location_id | monthly_fee | per_order_fee | default_fee_payer | customer_paid_order_limit | period_order_count | period_reset_at |
+|-------------|-------------|---------------|-------------------|--------------------------|-------------------|-----------------|
+| uuid-loc-01 | 0.00 | 1.00 | customer | 100 | 3 | 2026-09-14 |
+
+### shifts
+| id | user_id | location_id | clock_in | clock_out |
+|----|---------|-------------|----------|-----------|
+| uuid-shift-01 | uuid-user-01 | uuid-loc-01 | 2026-09-14 09:00:00 | 2026-09-14 18:00:00 |
+
+### audit_logs
+| id | user_id | location_id | action | entity | entity_id | meta_json | created_at |
+|----|---------|-------------|--------|--------|-----------|-----------|------------|
+| uuid-audit-01 | uuid-user-01 | uuid-loc-01 | create | order | uuid-order-01 | {"total": 284.50} | 2026-09-14 |
+| uuid-audit-02 | uuid-user-01 | uuid-loc-01 | update | order | uuid-order-02 | {"status": "preparing"} | 2026-09-14 |
+
 ## Commands
 
 ```bash

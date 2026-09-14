@@ -22,7 +22,6 @@ export async function initMobile() {
 
       PushNotifications.addListener('registration', (token) => {
         console.log('Push registration success, token:', token.value);
-        // TODO: Send token to backend
       });
 
       PushNotifications.addListener('registrationError', (err) => {
