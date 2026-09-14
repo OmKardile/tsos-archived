@@ -140,6 +140,8 @@ export async function seed() {
   console.log('PIN: 1234');
 }
 
-seed()
-  .catch(console.error)
-  .finally(() => pool.end());
+if (process.argv[1]?.endsWith('seed.ts') || process.argv[1]?.endsWith('seed.js')) {
+  seed()
+    .catch(console.error)
+    .finally(() => pool.end());
+}

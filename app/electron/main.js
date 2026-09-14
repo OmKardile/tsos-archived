@@ -51,7 +51,7 @@ function createMenu() {
     {
       label: 'File',
       submenu: [
-        { label: 'Settings', accelerator: 'CmdOrCtrl+,', click: () => mainWindow?.webContents.send('navigate', '/settings') },
+        { label: 'Settings', accelerator: 'CmdOrCtrl+,', click: () => mainWindow?.webContents.send('navigate', '/dashboard/settings') },
         { type: 'separator' },
         { role: 'quit' },
       ],
@@ -59,10 +59,10 @@ function createMenu() {
     {
       label: 'View',
       submenu: [
-        { label: 'POS', accelerator: 'CmdOrCtrl+1', click: () => mainWindow?.webContents.send('navigate', '/pos') },
-        { label: 'Orders', accelerator: 'CmdOrCtrl+2', click: () => mainWindow?.webContents.send('navigate', '/orders') },
-        { label: 'KDS', accelerator: 'CmdOrCtrl+3', click: () => mainWindow?.webContents.send('navigate', '/kds') },
-        { label: 'Menu', accelerator: 'CmdOrCtrl+4', click: () => mainWindow?.webContents.send('navigate', '/menu') },
+        { label: 'POS', accelerator: 'CmdOrCtrl+1', click: () => mainWindow?.webContents.send('navigate', '/dashboard/pos') },
+        { label: 'Orders', accelerator: 'CmdOrCtrl+2', click: () => mainWindow?.webContents.send('navigate', '/dashboard/orders') },
+        { label: 'KDS', accelerator: 'CmdOrCtrl+3', click: () => mainWindow?.webContents.send('navigate', '/dashboard/kds') },
+        { label: 'Menu', accelerator: 'CmdOrCtrl+4', click: () => mainWindow?.webContents.send('navigate', '/dashboard/menu') },
         { type: 'separator' },
         { role: 'reload' },
         { role: 'toggleDevTools' },

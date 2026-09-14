@@ -101,7 +101,8 @@ export default function POSPage() {
     return sum + ((basePrice + addonTotal) * item.qty * taxRate);
   }, 0);
 
-  const grandTotal = subtotal + taxTotal - discount;
+  const platformFee = 1; // ₹1 per order
+  const grandTotal = subtotal + taxTotal - discount + platformFee;
 
   const placeOrder = async () => {
     if (cart.length === 0 || !activeLocationId) return;

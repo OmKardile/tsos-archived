@@ -30,7 +30,6 @@ export default function SettingsPage() {
     setSaving(true);
     try {
       await api.patch(`/settings?locationId=${activeLocationId}`, {
-        locationId: activeLocationId,
         perOrderFee: feeConfig.perOrderFee,
         defaultFeePayer: feeConfig.defaultFeePayer,
         customerPaidOrderLimit: feeConfig.customerPaidOrderLimit,

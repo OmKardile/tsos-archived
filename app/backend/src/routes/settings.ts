@@ -38,7 +38,7 @@ router.get('/', async (req: AuthRequest, res: Response) => {
 });
 
 router.patch('/', requireRole('owner'), async (req: AuthRequest, res: Response) => {
-  const locationId = req.body.locationId as string;
+  const locationId = (req.query.locationId as string) || req.body.locationId;
   if (!locationId || !req.user!.location_ids.includes(locationId)) {
     return res.status(400).json({ error: 'Valid locationId required' });
   }
@@ -76,7 +76,7 @@ router.patch('/', requireRole('owner'), async (req: AuthRequest, res: Response) 
 
 // Reset period counter (called by cron or manually)
 router.post('/reset-period', requireRole('owner'), async (req: AuthRequest, res: Response) => {
-  const locationId = req.body.locationId as string;
+  const locationId = (req.query.locationId as string) || req.body.locationId;
   if (!locationId || !req.user!.location_ids.includes(locationId)) {
     return res.status(400).json({ error: 'Valid locationId required' });
   }

@@ -1,6 +1,3 @@
-import { readFileSync } from 'fs';
-import { join } from 'path';
-
 let initialized = false;
 let firebaseApp: any = null;
 
