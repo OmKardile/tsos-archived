@@ -110,7 +110,14 @@ router.post('/login', async (req: Request, res: Response) => {
 
     res.json({
       token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        businessId: user.business_id,
+        locationIds: user.location_ids,
+      },
     });
   } catch (err: any) {
     if (err instanceof z.ZodError) {
@@ -148,7 +155,14 @@ router.post('/pin-login', async (req: Request, res: Response) => {
 
     res.json({
       token,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+        businessId: user.business_id,
+        locationIds: user.location_ids,
+      },
     });
   } catch (err: any) {
     if (err instanceof z.ZodError) {

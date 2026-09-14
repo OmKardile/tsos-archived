@@ -11,7 +11,7 @@ export default function Login() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUser } = useStore();
+  const { setUser, setLocations, setActiveLocationId } = useStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +27,14 @@ export default function Login() {
       }
       localStorage.setItem('tsos_token', data.token);
       setUser(data.user);
+
+      // Fetch locations after login
+      const locs = await api.get('/locations');
+      setLocations(locs);
+      if (locs.length > 0) {
+        setActiveLocationId(locs[0].id);
+      }
+
       navigate('/dashboard');
     } catch (err: any) {
       setError(err.message || 'Login failed');
