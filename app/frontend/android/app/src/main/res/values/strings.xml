@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">TSOS</string>
+    <string name="title_activity_main">TSOS</string>
+    <string name="package_name">dev.tsos.app</string>
+    <string name="custom_url_scheme">dev.tsos.app</string>
+</resources>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Receipt</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      width: 300px;
+      padding: 10px;
+    }
+    .header { text-align: center; margin-bottom: 10px; }
+    .header h1 { font-size: 16px; margin-bottom: 4px; }
+    .header p { font-size: 10px; color: #666; }
+    .divider { border-top: 1px dashed #000; margin: 8px 0; }
+    .item { display: flex; justify-content: space-between; margin: 4px 0; }
+    .item-name { flex: 1; }
+    .item-qty { width: 30px; text-align: center; }
+    .item-price { width: 60px; text-align: right; }
+    .total { font-weight: bold; font-size: 14px; margin-top: 8px; }
+    .footer { text-align: center; margin-top: 10px; font-size: 10px; color: #666; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>TSOS</h1>
+    <p>Thank you for your order!</p>
+  </div>
+  <div class="divider"></div>
+  <div id="items"></div>
+  <div class="divider"></div>
+  <div class="item total">
+    <span>TOTAL</span>
+    <span id="total"></span>
+  </div>
+  <div class="divider"></div>
+  <div class="footer">
+    <p>Order #<span id="order-id"></span></p>
+    <p><span id="date"></span></p>
+    <p>Powered by TSOS</p>
+  </div>
+</body>
+</html>

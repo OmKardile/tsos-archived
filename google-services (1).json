@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "127566046905",
+    "project_id": "tsos-69",
+    "storage_bucket": "tsos-69.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:127566046905:android:13666bae0e9724eae9dd68",
+        "android_client_info": {
+          "package_name": "com.tsos.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS-AqkTfgUjfjk3zE5rQhPnQjD3Za8JWo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
