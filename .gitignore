@@ -12,3 +12,14 @@ app/native-windows/bin/
 app/native-windows/obj/
 app/backend/dist/
 app/electron/dist-electron/
+app/hybrid/electron/node_modules/
+app/hybrid/electron/dist-electron/
+app/hybrid/capacitor/node_modules/
+app/android-native/build/
+app/android-native/app/build/
+app/android-native/.gradle/
+app/android-native/local.properties
+app/android-native/app/release/
+app/android-native/captures/
+app/android-native/.externalNativeBuild/
+app/android-native/.cxx/

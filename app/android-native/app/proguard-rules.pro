@@ -1,0 +1,2 @@
+-keep class com.tsos.app.data.api.models.** { *; }
+-keepclassmembers class com.tsos.app.data.api.models.** { *; }
