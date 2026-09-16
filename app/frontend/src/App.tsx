@@ -17,7 +17,6 @@ import ReportsPage from './pages/ReportsPage';
 import SettingsPage from './pages/SettingsPage';
 import StorefrontPage from './pages/StorefrontPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
-import LandingPage from './pages/LandingPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user } = useStore();
@@ -56,9 +55,6 @@ export default function App() {
         <Route path="/order/:locationSlug/table/:tableId" element={<StorefrontPage />} />
         <Route path="/order/:locationSlug/track/:orderId" element={<OrderTrackingPage />} />
 
-        {/* Landing page */}
-        <Route path="/" element={<LandingPage />} />
-
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
@@ -85,7 +81,7 @@ export default function App() {
           <Route path="settings" element={<SettingsPage />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </BrowserRouter>
   );
