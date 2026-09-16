@@ -4,522 +4,446 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TSOS — POS + Cafe Operations Platform</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #FFF9F2;
-      --surface: #FFFFFF;
-      --surface-secondary: #F5F0EB;
-      --divider: #E9E0D6;
-      --action: #F97316;
-      --action-hover: #EA580C;
-      --action-soft: #FFF1E6;
-      --text: #1C1917;
-      --text-secondary: #57534E;
-      --text-muted: #A8A29E;
-      --completed: #17803D;
-      --completed-soft: #E8F5EC;
-      --attention: #B45309;
-      --attention-soft: #FFF4E5;
-      --destructive: #B42318;
-      --radius: 12px;
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              300: '#fdba74',
+              400: '#fb923c',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+            }
+          }
+        }
+      }
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
-
-    /* ── Animated gradient hero ── */
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    
+    * { font-family: 'Inter', sans-serif; }
+    
     .gradient-bg {
-      background: linear-gradient(-45deg, #FFF9F2, #FFF1E6, #FFE8D1, #FFF9F2);
+      background: linear-gradient(-45deg, #fff7ed, #ffedd5, #fed7aa, #fff7ed);
       background-size: 400% 400%;
       animation: gradientShift 8s ease infinite;
     }
+    
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    /* ── Animations ── */
+    
     .float { animation: float 6s ease-in-out infinite; }
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
-
+    
     .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
     .fade-in.visible { opacity: 1; transform: translateY(0); }
-
+    
+    .bento-card { transition: all 0.3s ease; }
+    .bento-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+    
+    .pricing-popular { position: relative; }
+    .pricing-popular::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    
+    .nav-blur { backdrop-filter: blur(12px); background: rgba(255,255,255,0.8); }
+    
     .cta-glow { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); animation: ctaPulse 2s infinite; }
     @keyframes ctaPulse {
       0% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
-      70% { box-shadow: 0 0 0 12px rgba(249, 115, 22, 0); }
+      70% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0); }
       100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0); }
     }
-
-    /* ── Nav ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      backdrop-filter: blur(12px); background: rgba(255,249,242,0.85);
-      border-bottom: 1px solid var(--divider);
-    }
-    .nav-inner {
-      max-width: 1200px; margin: 0 auto; padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center; height: 64px;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
-    .nav-logo-icon {
-      width: 32px; height: 32px; background: var(--action); border-radius: 8px;
-      display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;
-    }
-    .nav-logo-text { font-size: 20px; font-weight: 700; }
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a {
-      color: var(--text-secondary); text-decoration: none; font-size: 14px; font-weight: 500;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-actions { display: flex; align-items: center; gap: 16px; }
-    .nav-actions a { text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
-    .btn-login { color: var(--text-secondary); }
-    .btn-login:hover { color: var(--text); }
-    .btn-cta {
-      background: var(--action); color: white; padding: 10px 24px; border-radius: 999px;
-      font-weight: 600; transition: background 0.2s;
-    }
-    .btn-cta:hover { background: var(--action-hover); }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-actions .btn-login { display: none; }
-    }
-
-    /* ── Buttons ── */
-    .btn-primary {
-      display: inline-block; background: var(--action); color: white;
-      padding: 16px 32px; border-radius: 999px; font-size: 18px; font-weight: 600;
-      text-decoration: none; transition: background 0.2s; text-align: center;
-    }
-    .btn-primary:hover { background: var(--action-hover); }
-    .btn-secondary {
-      display: inline-block; border: 2px solid var(--divider); color: var(--text);
-      padding: 16px 32px; border-radius: 999px; font-size: 18px; font-weight: 600;
-      text-decoration: none; transition: border-color 0.2s, color 0.2s; text-align: center;
-    }
-    .btn-secondary:hover { border-color: var(--action); color: var(--action); }
-
-    /* ── Section containers ── */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
-    section { padding: 96px 24px; }
-    .section-title { font-size: 40px; font-weight: 700; text-align: center; margin-bottom: 16px; color: var(--text); }
-    .section-subtitle { font-size: 20px; text-align: center; color: var(--text-secondary); max-width: 600px; margin: 0 auto 64px; }
-
-    /* ── Bento cards ── */
-    .bento-card {
-      background: var(--surface); border: 1px solid var(--divider); border-radius: 20px;
-      padding: 32px; transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .bento-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-
+    
     .feature-icon {
-      width: 48px; height: 48px; border-radius: 12px;
-      background: var(--action-soft); display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #fff7ed, #ffedd5);
     }
-    .feature-icon svg { width: 24px; height: 24px; color: var(--action); }
-    .feature-title { font-size: 20px; font-weight: 700; color: var(--text); margin: 16px 0 8px; }
-    .feature-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.6; }
-
-    /* ── Pricing ── */
-    .pricing-popular {
-      position: relative; border: 2px solid var(--action) !important;
-    }
-    .pricing-popular::before {
-      content: 'Most Popular'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--action), var(--action-hover));
-      color: white; padding: 4px 16px; border-radius: 999px; font-size: 12px; font-weight: 600;
-    }
-
-    /* ── FAQ ── */
-    .faq-item {
-      background: var(--surface); border: 1px solid var(--divider); border-radius: 12px;
-      overflow: hidden; transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .faq-item:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-    .faq-btn {
-      width: 100%; padding: 20px 24px; border: none; background: none; cursor: pointer;
-      display: flex; justify-content: space-between; align-items: center; text-align: left;
-    }
-    .faq-btn span { font-weight: 600; color: var(--text); font-size: 16px; }
-    .faq-btn svg { width: 20px; height: 20px; color: var(--text-muted); transition: transform 0.3s; flex-shrink: 0; }
-    .faq-btn svg.rotated { transform: rotate(180deg); }
-    .faq-answer {
-      max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
-      padding: 0 24px; color: var(--text-secondary); font-size: 15px; line-height: 1.6;
-    }
-    .faq-answer.open { max-height: 200px; padding: 0 24px 20px; }
-
-    /* ── Footer ── */
-    footer {
-      background: var(--text); color: white; padding: 64px 24px;
-    }
-    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-    footer a:hover { color: white; }
-
-    /* ── Stars ── */
-    .stars { display: flex; gap: 2px; margin-bottom: 16px; }
-    .stars svg { width: 18px; height: 18px; fill: #F59E0B; }
-
-    /* ── Trust badges ── */
-    .trust-badge {
-      display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--text-muted);
-    }
-    .trust-badge svg { width: 20px; height: 20px; color: var(--completed); flex-shrink: 0; }
+    
+    html { scroll-behavior: smooth; }
   </style>
 </head>
-<body>
+<body class="bg-white text-gray-900 antialiased">
 
   <!-- Navigation -->
-  <nav>
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <div class="nav-logo-icon">T</div>
-        <span class="nav-logo-text">TSOS</span>
-      </a>
-      <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-      </div>
-      <div class="nav-actions">
-        <a href="/login" class="btn-login">Login</a>
-        <a href="/signup" class="btn-cta">Try TSOS Free</a>
+  <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
+            <span class="text-white font-bold text-sm">T</span>
+          </div>
+          <span class="text-xl font-bold text-gray-900">TSOS</span>
+        </div>
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-gray-600 hover:text-gray-900 transition">Features</a>
+          <a href="#how-it-works" class="text-gray-600 hover:text-gray-900 transition">How It Works</a>
+          <a href="#pricing" class="text-gray-600 hover:text-gray-900 transition">Pricing</a>
+          <a href="#faq" class="text-gray-600 hover:text-gray-900 transition">FAQ</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/login" class="text-gray-600 hover:text-gray-900 font-medium transition">Login</a>
+          <a href="/signup" class="bg-brand-500 hover:bg-brand-600 text-white px-5 py-2 rounded-full font-semibold transition">Try TSOS Free</a>
+        </div>
       </div>
     </div>
   </nav>
 
-  <!-- Hero -->
-  <section class="gradient-bg" style="min-height: 100vh; display: flex; align-items: center; padding-top: 64px;">
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;">
+  <!-- Hero Section -->
+  <section class="gradient-bg min-h-screen flex items-center pt-16 overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="fade-in">
-          <div style="display: inline-flex; align-items: center; gap: 8px; background: var(--surface); backdrop-filter: blur(8px); border-radius: 999px; padding: 8px 16px; margin-bottom: 24px; border: 1px solid var(--divider);">
-            <span style="width: 8px; height: 8px; background: var(--completed); border-radius: 50%; animation: pulse 2s infinite;"></span>
-            <span style="font-size: 14px; font-weight: 500; color: var(--text-secondary);">Now live in India</span>
+          <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur rounded-full px-4 py-2 mb-6 border border-orange-100">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="text-sm font-medium text-gray-600">Now live in India</span>
           </div>
-          <h1 style="font-size: 56px; font-weight: 800; line-height: 1.1; margin-bottom: 24px; color: var(--text);">
-            POS + Cafe Ops.<br>
-            <span style="color: var(--action);">₹0/month.</span>
+          <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+            POS + Cafe Ops.
+            <span class="text-brand-500">₹0/month.</span>
           </h1>
-          <p style="font-size: 20px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 32px;">
-            Accept orders, manage kitchen, track inventory, and grow loyalty — all from one platform.
+          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+            Accept orders, manage kitchen, track inventory, and grow loyalty — all from one platform. 
             Pay only ₹1 per order. No hidden fees.
           </p>
-          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-            <a href="/signup" class="btn-primary cta-glow">Try TSOS Free</a>
-            <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="/signup" class="cta-glow bg-brand-500 hover:bg-brand-600 text-white px-8 py-4 rounded-full font-semibold text-lg transition text-center">
+              Try TSOS Free
+            </a>
+            <a href="#how-it-works" class="border-2 border-gray-300 hover:border-brand-500 text-gray-700 px-8 py-4 rounded-full font-semibold text-lg transition text-center">
+              See How It Works
+            </a>
           </div>
-          <div style="display: flex; gap: 24px; margin-top: 32px; flex-wrap: wrap;">
-            <div class="trust-badge">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          <div class="flex items-center gap-6 mt-8 text-sm text-gray-500">
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               No credit card required
             </div>
-            <div class="trust-badge">
-              <svg viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+            <div class="flex items-center gap-2">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
               Setup in 5 minutes
             </div>
           </div>
         </div>
-        <div class="fade-in" style="position: relative;">
-          <div class="float" style="position: relative; z-index: 10;">
-            <div style="background: var(--surface); border-radius: 20px; box-shadow: 0 25px 50px rgba(0,0,0,0.12); padding: 24px; border: 1px solid var(--divider);">
-              <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                <span style="width: 12px; height: 12px; border-radius: 50%; background: #FF5F57;"></span>
-                <span style="width: 12px; height: 12px; border-radius: 50%; background: #FEBC2E;"></span>
-                <span style="width: 12px; height: 12px; border-radius: 50%; background: #28C840;"></span>
+        <div class="fade-in relative">
+          <div class="float relative z-10">
+            <div class="bg-white rounded-2xl shadow-2xl p-6 border border-gray-100">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                <div class="w-3 h-3 rounded-full bg-green-400"></div>
               </div>
-              <div style="display: flex; flex-direction: column; gap: 10px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg); border-radius: 10px;">
-                  <span style="font-size: 14px; font-weight: 500;">Masala Chai</span>
-                  <span style="font-size: 14px; font-weight: 700; color: var(--action);">₹40</span>
+              <div class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm font-medium">Masala Chai</span>
+                  <span class="text-sm font-bold text-brand-500">₹40</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg); border-radius: 10px;">
-                  <span style="font-size: 14px; font-weight: 500;">Vada Pav</span>
-                  <span style="font-size: 14px; font-weight: 700; color: var(--action);">₹60</span>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm font-medium">Vada Pav</span>
+                  <span class="text-sm font-bold text-brand-500">₹60</span>
                 </div>
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: var(--bg); border-radius: 10px;">
-                  <span style="font-size: 14px; font-weight: 500;">Cold Coffee</span>
-                  <span style="font-size: 14px; font-weight: 700; color: var(--action);">₹80</span>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <span class="text-sm font-medium">Cold Coffee</span>
+                  <span class="text-sm font-bold text-brand-500">₹80</span>
                 </div>
-                <div style="border-top: 1px solid var(--divider); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                  <span style="font-weight: 600;">Total</span>
-                  <span style="font-size: 24px; font-weight: 800; color: var(--action);">₹180</span>
+                <div class="border-t pt-3 flex justify-between items-center">
+                  <span class="font-semibold">Total</span>
+                  <span class="text-xl font-bold text-brand-500">₹180</span>
                 </div>
               </div>
             </div>
           </div>
-          <div style="position: absolute; top: -40px; right: -40px; width: 280px; height: 280px; background: var(--action-soft); border-radius: 50%; filter: blur(60px); opacity: 0.6;"></div>
-          <div style="position: absolute; bottom: -40px; left: -40px; width: 280px; height: 280px; background: #FFE8D1; border-radius: 50%; filter: blur(60px); opacity: 0.6;"></div>
+          <div class="absolute -top-10 -right-10 w-72 h-72 bg-brand-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+          <div class="absolute -bottom-10 -left-10 w-72 h-72 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Logos -->
-  <section style="padding: 48px 24px; border-bottom: 1px solid var(--divider);">
-    <div class="container">
-      <p style="text-align: center; font-size: 14px; color: var(--text-muted); margin-bottom: 32px;">Trusted by 500+ cafes across India</p>
-      <div style="display: flex; justify-content: center; align-items: center; gap: 48px; flex-wrap: wrap; opacity: 0.35;">
-        <span style="font-size: 24px; font-weight: 700; color: var(--text-muted);">Cafe Coffee Day</span>
-        <span style="font-size: 24px; font-weight: 700; color: var(--text-muted);">Blue Tokai</span>
-        <span style="font-size: 24px; font-weight: 700; color: var(--text-muted);">Third Wave</span>
-        <span style="font-size: 24px; font-weight: 700; color: var(--text-muted);">Starbucks</span>
-        <span style="font-size: 24px; font-weight: 700; color: var(--text-muted);">Chaayos</span>
+  <!-- Logos Section -->
+  <section class="py-12 border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <p class="text-center text-sm text-gray-400 mb-8">Trusted by 500+ cafes across India</p>
+      <div class="flex justify-center items-center gap-12 flex-wrap opacity-40">
+        <span class="text-2xl font-bold text-gray-400">Cafe Coffee Day</span>
+        <span class="text-2xl font-bold text-gray-400">Blue Tokai</span>
+        <span class="text-2xl font-bold text-gray-400">Third Wave</span>
+        <span class="text-2xl font-bold text-gray-400">Starbucks</span>
+        <span class="text-2xl font-bold text-gray-400">Chaayos</span>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" style="background: var(--surface-secondary);">
-    <div class="container">
-      <h2 class="section-title fade-in">Everything you need to run your cafe</h2>
-      <p class="section-subtitle fade-in">One platform. Every feature. From order to inventory to loyalty.</p>
-
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-        <!-- POS - large -->
-        <div class="bento-card fade-in" style="grid-column: span 2;">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+  <!-- Features Section -->
+  <section id="features" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Everything you need to run your cafe</h2>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">One platform. Every feature. From order to inventory to loyalty.</p>
+      </div>
+      
+      <!-- Bento Grid -->
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- POS - Large -->
+        <div class="md:col-span-2 bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
           </div>
-          <h3 class="feature-title">Point of Sale</h3>
-          <p class="feature-desc">Lightning-fast checkout with item search, cart management, discounts, and multiple payment methods. Built for Indian cafes.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Point of Sale</h3>
+          <p class="text-gray-600">Lightning-fast checkout with item search, cart management, discounts, and multiple payment methods. Built for Indian cafes.</p>
         </div>
-
+        
         <!-- KDS -->
-        <div class="bento-card fade-in">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
           </div>
-          <h3 class="feature-title">Kitchen Display</h3>
-          <p class="feature-desc">Real-time order management with tap-to-advance status flow.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Kitchen Display</h3>
+          <p class="text-gray-600">Real-time order management with tap-to-advance status flow.</p>
         </div>
-
+        
         <!-- QR Ordering -->
-        <div class="bento-card fade-in">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
           </div>
-          <h3 class="feature-title">QR Ordering</h3>
-          <p class="feature-desc">Customers scan, browse menu, and order from their table. No app download needed.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">QR Ordering</h3>
+          <p class="text-gray-600">Customers scan, browse menu, and order from their table. No app download needed.</p>
         </div>
-
+        
         <!-- Inventory -->
-        <div class="bento-card fade-in">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
           </div>
-          <h3 class="feature-title">Inventory</h3>
-          <p class="feature-desc">Auto-deduct ingredients on order completion. Low-stock alerts via Socket.io.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Inventory</h3>
+          <p class="text-gray-600">Auto-deduct ingredients on order completion. Low-stock alerts via Socket.io.</p>
         </div>
-
+        
         <!-- Loyalty -->
-        <div class="bento-card fade-in">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           </div>
-          <h3 class="feature-title">Loyalty</h3>
-          <p class="feature-desc">Points system, customer profiles, and targeted offers to bring them back.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Loyalty</h3>
+          <p class="text-gray-600">Points system, customer profiles, and targeted offers to bring them back.</p>
         </div>
-
-        <!-- Multi-Location - large -->
-        <div class="bento-card fade-in" style="grid-column: span 2;">
-          <div class="feature-icon">
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        
+        <!-- Multi-Location -->
+        <div class="md:col-span-2 bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="feature-icon w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
           </div>
-          <h3 class="feature-title">Multi-Location</h3>
-          <p class="feature-desc">Manage all your cafe locations from one dashboard. Switch between them instantly. Each location has its own menu, staff, and inventory.</p>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Multi-Location</h3>
+          <p class="text-gray-600">Manage all your cafe locations from one dashboard. Switch between them instantly. Each location has its own menu, staff, and inventory.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- How It Works -->
-  <section id="how-it-works">
-    <div class="container">
-      <h2 class="section-title fade-in">Up and running in 3 steps</h2>
-      <p class="section-subtitle fade-in">No complex setup. No training required.</p>
-
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;">
-        <div style="text-align: center;" class="fade-in">
-          <div style="width: 64px; height: 64px; background: var(--action); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 24px;">1</div>
-          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">Sign Up Free</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">Create your account in 30 seconds. No credit card needed.</p>
+  <section id="how-it-works" class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Up and running in 3 steps</h2>
+        <p class="text-xl text-gray-600">No complex setup. No training required.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center fade-in">
+          <div class="w-16 h-16 bg-brand-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">1</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Sign Up Free</h3>
+          <p class="text-gray-600">Create your account in 30 seconds. No credit card needed.</p>
         </div>
-        <div style="text-align: center;" class="fade-in">
-          <div style="width: 64px; height: 64px; background: var(--action); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 24px;">2</div>
-          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">Add Your Menu</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">Upload your menu items, set prices, and configure categories.</p>
+        <div class="text-center fade-in">
+          <div class="w-16 h-16 bg-brand-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">2</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Add Your Menu</h3>
+          <p class="text-gray-600">Upload your menu items, set prices, and configure categories.</p>
         </div>
-        <div style="text-align: center;" class="fade-in">
-          <div style="width: 64px; height: 64px; background: var(--action); color: white; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 700; margin: 0 auto 24px;">3</div>
-          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 12px;">Start Selling</h3>
-          <p style="color: var(--text-secondary); line-height: 1.6;">Open POS, take orders, and grow your business from day one.</p>
+        <div class="text-center fade-in">
+          <div class="w-16 h-16 bg-brand-500 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-6">3</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Start Selling</h3>
+          <p class="text-gray-600">Open POS, take orders, and grow your business from day one.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section id="pricing" style="background: var(--surface-secondary);">
-    <div class="container">
-      <h2 class="section-title fade-in">Simple, transparent pricing</h2>
-      <p class="section-subtitle fade-in">No surprises. No hidden fees. Pay only when you transact.</p>
-
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 800px; margin: 0 auto;">
-        <!-- Starter -->
-        <div class="bento-card fade-in">
-          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Starter</h3>
-          <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">Perfect for single-location cafes</p>
-          <div style="margin-bottom: 24px;">
-            <span style="font-size: 56px; font-weight: 800;">₹0</span>
-            <span style="color: var(--text-muted);">/month</span>
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-24 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Simple, transparent pricing</h2>
+        <p class="text-xl text-gray-600">No surprises. No hidden fees. Pay only when you transact.</p>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <!-- Free Plan -->
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Starter</h3>
+          <p class="text-gray-500 mb-6">Perfect for single-location cafes</p>
+          <div class="mb-6">
+            <span class="text-5xl font-extrabold text-gray-900">₹0</span>
+            <span class="text-gray-500">/month</span>
           </div>
-          <ul style="list-style: none; margin-bottom: 32px;">
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              POS + Orders
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">POS + Orders</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Kitchen Display
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Kitchen Display</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              QR Ordering
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">QR Ordering</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Inventory Tracking
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Inventory Tracking</span>
             </li>
           </ul>
-          <div style="border-top: 1px solid var(--divider); padding-top: 24px; margin-bottom: 24px;">
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Per-order fee:</p>
-            <div>
-              <span style="font-size: 32px; font-weight: 700;">₹1</span>
-              <span style="color: var(--text-muted);">/order</span>
+          <div class="border-t pt-6">
+            <p class="text-sm text-gray-500 mb-4">Per-order fee:</p>
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl font-bold text-gray-900">₹1</span>
+              <span class="text-gray-500">/order</span>
             </div>
           </div>
-          <a href="/signup" style="display: block; width: 100%; background: var(--text); color: white; text-align: center; padding: 14px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: opacity 0.2s;">Get Started</a>
+          <a href="/signup" class="mt-8 block w-full bg-gray-900 hover:bg-gray-800 text-white text-center py-3 rounded-full font-semibold transition">Get Started</a>
         </div>
-
-        <!-- Growth -->
-        <div class="bento-card pricing-popular fade-in">
-          <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">Growth</h3>
-          <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 14px;">For multi-location cafes</p>
-          <div style="margin-bottom: 24px;">
-            <span style="font-size: 56px; font-weight: 800;">₹0</span>
-            <span style="color: var(--text-muted);">/month</span>
+        
+        <!-- Pro Plan -->
+        <div class="pricing-popular bento-card bg-white rounded-2xl p-8 border-2 border-brand-500 fade-in">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Growth</h3>
+          <p class="text-gray-500 mb-6">For multi-location cafes</p>
+          <div class="mb-6">
+            <span class="text-5xl font-extrabold text-gray-900">₹0</span>
+            <span class="text-gray-500">/month</span>
           </div>
-          <ul style="list-style: none; margin-bottom: 32px;">
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Everything in Starter
+          <ul class="space-y-3 mb-8">
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Everything in Starter</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Multi-Location
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Multi-Location</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Loyalty Program
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Loyalty Program</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Advanced Reports
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Advanced Reports</span>
             </li>
-            <li style="display: flex; align-items: center; gap: 12px; padding: 8px 0; color: var(--text-secondary); font-size: 15px;">
-              <svg style="width: 20px; height: 20px; color: var(--completed); flex-shrink: 0;" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-              Priority Support
+            <li class="flex items-center gap-3">
+              <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+              <span class="text-gray-600">Priority Support</span>
             </li>
           </ul>
-          <div style="border-top: 1px solid var(--divider); padding-top: 24px; margin-bottom: 24px;">
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 8px;">Per-order fee:</p>
-            <div>
-              <span style="font-size: 32px; font-weight: 700; color: var(--action);">₹0.50</span>
-              <span style="color: var(--text-muted);">/order</span>
+          <div class="border-t pt-6">
+            <p class="text-sm text-gray-500 mb-4">Per-order fee:</p>
+            <div class="flex items-baseline gap-1">
+              <span class="text-3xl font-bold text-brand-500">₹0.50</span>
+              <span class="text-gray-500">/order</span>
             </div>
           </div>
-          <a href="/signup" style="display: block; width: 100%; background: var(--action); color: white; text-align: center; padding: 14px; border-radius: 999px; font-weight: 600; text-decoration: none; transition: background 0.2s;" onmouseover="this.style.background='var(--action-hover)'" onmouseout="this.style.background='var(--action)'">Try TSOS Free</a>
+          <a href="/signup" class="mt-8 block w-full bg-brand-500 hover:bg-brand-600 text-white text-center py-3 rounded-full font-semibold transition">Try TSOS Free</a>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Testimonials -->
-  <section>
-    <div class="container">
-      <h2 class="section-title fade-in">Loved by cafe owners</h2>
-      <p class="section-subtitle fade-in">See what our customers have to say</p>
-
-      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
-        <div class="bento-card fade-in">
-          <div class="stars">
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Loved by cafe owners</h2>
+        <p class="text-xl text-gray-600">See what our customers have to say</p>
+      </div>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
           </div>
-          <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.7; font-size: 15px;">"TSOS transformed our cafe operations. QR ordering alone increased our table turnover by 40%. The ₹0/month pricing is unbeatable."</p>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: var(--action-soft); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <span style="color: var(--action); font-weight: 600; font-size: 14px;">RK</span>
+          <p class="text-gray-600 mb-6">"TSOS transformed our cafe operations. QR ordering alone increased our table turnover by 40%. The ₹0/month pricing is unbeatable."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+              <span class="text-brand-600 font-semibold">RK</span>
             </div>
             <div>
-              <p style="font-weight: 600; font-size: 14px;">Rahul Kumar</p>
-              <p style="font-size: 13px; color: var(--text-muted);">Owner, Chai Point Delhi</p>
+              <p class="font-semibold text-gray-900">Rahul Kumar</p>
+              <p class="text-sm text-gray-500">Owner, Chai Point Delhi</p>
             </div>
           </div>
         </div>
-
-        <div class="bento-card fade-in">
-          <div class="stars">
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
           </div>
-          <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.7; font-size: 15px;">"The kitchen display system is a game changer. No more paper tickets, no more missed orders. Our kitchen runs like clockwork now."</p>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: var(--action-soft); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <span style="color: var(--action); font-weight: 600; font-size: 14px;">PS</span>
+          <p class="text-gray-600 mb-6">"The kitchen display system is a game changer. No more paper tickets, no more missed orders. Our kitchen runs like clockwork now."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+              <span class="text-brand-600 font-semibold">PS</span>
             </div>
             <div>
-              <p style="font-weight: 600; font-size: 14px;">Priya Sharma</p>
-              <p style="font-size: 13px; color: var(--text-muted);">Manager, Brew House Mumbai</p>
+              <p class="font-semibold text-gray-900">Priya Sharma</p>
+              <p class="text-sm text-gray-500">Manager, Brew House Mumbai</p>
             </div>
           </div>
         </div>
-
-        <div class="bento-card fade-in">
-          <div class="stars">
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-            <svg viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+        
+        <div class="bento-card bg-white rounded-2xl p-8 border border-gray-100 fade-in">
+          <div class="flex items-center gap-1 mb-4">
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+            <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
           </div>
-          <p style="color: var(--text-secondary); margin-bottom: 24px; line-height: 1.7; font-size: 15px;">"We manage 5 locations from one dashboard. The inventory tracking alone saves us hours every week. Best investment we've made."</p>
-          <div style="display: flex; align-items: center; gap: 12px;">
-            <div style="width: 40px; height: 40px; background: var(--action-soft); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-              <span style="color: var(--action); font-weight: 600; font-size: 14px;">AV</span>
+          <p class="text-gray-600 mb-6">"We manage 5 locations from one dashboard. The inventory tracking alone saves us hours every week. Best investment we've made."</p>
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-brand-100 rounded-full flex items-center justify-center">
+              <span class="text-brand-600 font-semibold">AV</span>
             </div>
             <div>
-              <p style="font-weight: 600; font-size: 14px;">Amit Verma</p>
-              <p style="font-size: 13px; color: var(--text-muted);">Founder, Bean & Brew Bangalore</p>
+              <p class="font-semibold text-gray-900">Amit Verma</p>
+              <p class="text-sm text-gray-500">Founder, Bean & Brew Bangalore</p>
             </div>
           </div>
         </div>
@@ -527,103 +451,119 @@
     </div>
   </section>
 
-  <!-- FAQ -->
-  <section id="faq" style="background: var(--surface-secondary);">
-    <div class="container" style="max-width: 720px;">
-      <h2 class="section-title fade-in">Frequently asked questions</h2>
-      <p class="section-subtitle fade-in">Everything you need to know about TSOS</p>
-
-      <div style="display: flex; flex-direction: column; gap: 16px;">
-        <div class="faq-item fade-in">
-          <button class="faq-btn" onclick="toggleFaq(this)">
-            <span>Is there really no monthly fee?</span>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+  <!-- FAQ Section -->
+  <section id="faq" class="py-24 bg-gray-50">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 fade-in">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">Frequently asked questions</h2>
+        <p class="text-xl text-gray-600">Everything you need to know about TSOS</p>
+      </div>
+      
+      <div class="space-y-4">
+        <div class="bento-card bg-white rounded-xl border border-gray-100 fade-in">
+          <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+            <span class="font-semibold text-gray-900">Is there really no monthly fee?</span>
+            <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer">Yes! TSOS is completely free to use. You only pay ₹1 per order (or ₹0.50 for Growth plan). No setup fees, no hidden charges, no credit card required.</div>
+          <div class="hidden px-6 pb-4 text-gray-600">
+            Yes! TSOS is completely free to use. You only pay ₹1 per order (or ₹0.50 for Growth plan). No setup fees, no hidden charges, no credit card required.
+          </div>
         </div>
-
-        <div class="faq-item fade-in">
-          <button class="faq-btn" onclick="toggleFaq(this)">
-            <span>How does QR ordering work?</span>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        
+        <div class="bento-card bg-white rounded-xl border border-gray-100 fade-in">
+          <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+            <span class="font-semibold text-gray-900">How does QR ordering work?</span>
+            <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer">Each table gets a unique QR code. Customers scan it with their phone camera, browse your menu, add items to cart, and place orders directly. Orders appear on your KDS in real-time. No app download needed.</div>
+          <div class="hidden px-6 pb-4 text-gray-600">
+            Each table gets a unique QR code. Customers scan it with their phone camera, browse your menu, add items to cart, and place orders directly. Orders appear on your KDS in real-time. No app download needed.
+          </div>
         </div>
-
-        <div class="faq-item fade-in">
-          <button class="faq-btn" onclick="toggleFaq(this)">
-            <span>Can I manage multiple locations?</span>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        
+        <div class="bento-card bg-white rounded-xl border border-gray-100 fade-in">
+          <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+            <span class="font-semibold text-gray-900">Can I manage multiple locations?</span>
+            <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer">Yes! The Growth plan supports unlimited locations. Each location has its own menu, staff, inventory, and orders. You can switch between locations instantly from the dashboard.</div>
+          <div class="hidden px-6 pb-4 text-gray-600">
+            Yes! The Growth plan supports unlimited locations. Each location has its own menu, staff, inventory, and orders. You can switch between locations instantly from the dashboard.
+          </div>
         </div>
-
-        <div class="faq-item fade-in">
-          <button class="faq-btn" onclick="toggleFaq(this)">
-            <span>What payment methods do you support?</span>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        
+        <div class="bento-card bg-white rounded-xl border border-gray-100 fade-in">
+          <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+            <span class="font-semibold text-gray-900">What payment methods do you support?</span>
+            <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer">We support Cash, UPI, Card, and Razorpay (for online payments). You can configure which methods are available at each location.</div>
+          <div class="hidden px-6 pb-4 text-gray-600">
+            We support Cash, UPI, Card, and Razorpay (for online payments). You can configure which methods are available at each location.
+          </div>
         </div>
-
-        <div class="faq-item fade-in">
-          <button class="faq-btn" onclick="toggleFaq(this)">
-            <span>How long does setup take?</span>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        
+        <div class="bento-card bg-white rounded-xl border border-gray-100 fade-in">
+          <button class="w-full px-6 py-4 text-left flex justify-between items-center" onclick="this.nextElementSibling.classList.toggle('hidden'); this.querySelector('svg').classList.toggle('rotate-180')">
+            <span class="font-semibold text-gray-900">How long does setup take?</span>
+            <svg class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
-          <div class="faq-answer">Most cafes are up and running in under 5 minutes. Sign up, add your menu items, and start taking orders. No technical knowledge required.</div>
+          <div class="hidden px-6 pb-4 text-gray-600">
+            Most cafes are up and running in under 5 minutes. Sign up, add your menu items, and start taking orders. No technical knowledge required.
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="gradient-bg" style="text-align: center;">
-    <div class="container fade-in">
-      <h2 style="font-size: 48px; font-weight: 800; margin-bottom: 24px; color: var(--text);">Ready to transform your cafe?</h2>
-      <p style="font-size: 20px; color: var(--text-secondary); margin-bottom: 32px;">Join 500+ cafes already using TSOS. Start free today.</p>
-      <a href="/signup" class="btn-primary cta-glow">Try TSOS Free</a>
-      <p style="margin-top: 16px; font-size: 14px; color: var(--text-muted);">No credit card required. Setup in 5 minutes.</p>
+  <!-- CTA Section -->
+  <section class="py-24 gradient-bg">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-in">
+      <h2 class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Ready to transform your cafe?</h2>
+      <p class="text-xl text-gray-600 mb-8">Join 500+ cafes already using TSOS. Start free today.</p>
+      <a href="/signup" class="cta-glow inline-block bg-brand-500 hover:bg-brand-600 text-white px-10 py-4 rounded-full font-semibold text-lg transition">
+        Try TSOS Free
+      </a>
+      <p class="mt-4 text-sm text-gray-500">No credit card required. Setup in 5 minutes.</p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;">
+  <footer class="bg-gray-900 text-white py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-12">
         <div>
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
-            <div style="width: 32px; height: 32px; background: var(--action); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 14px;">T</div>
-            <span style="font-size: 20px; font-weight: 700;">TSOS</span>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-brand-500 rounded-lg flex items-center justify-center">
+              <span class="text-white font-bold text-sm">T</span>
+            </div>
+            <span class="text-xl font-bold">TSOS</span>
           </div>
-          <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; max-width: 280px;">POS + Cafe Operations Platform for Indian cafes.</p>
+          <p class="text-gray-400">POS + Cafe Operations Platform for Indian cafes.</p>
         </div>
         <div>
-          <h4 style="font-weight: 600; margin-bottom: 16px; font-size: 14px;">Product</h4>
-          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
-            <li><a href="#features">Features</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#how-it-works">How It Works</a></li>
+          <h4 class="font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#features" class="hover:text-white transition">Features</a></li>
+            <li><a href="#pricing" class="hover:text-white transition">Pricing</a></li>
+            <li><a href="#how-it-works" class="hover:text-white transition">How It Works</a></li>
           </ul>
         </div>
         <div>
-          <h4 style="font-weight: 600; margin-bottom: 16px; font-size: 14px;">Company</h4>
-          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
-            <li><a href="#">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition">About</a></li>
+            <li><a href="#" class="hover:text-white transition">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition">Careers</a></li>
           </ul>
         </div>
         <div>
-          <h4 style="font-weight: 600; margin-bottom: 16px; font-size: 14px;">Support</h4>
-          <ul style="list-style: none; display: flex; flex-direction: column; gap: 10px;">
-            <li><a href="#">Help Center</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+          <h4 class="font-semibold mb-4">Support</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition">Help Center</a></li>
+            <li><a href="#" class="hover:text-white transition">Contact</a></li>
+            <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
           </ul>
         </div>
       </div>
-      <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 48px; padding-top: 32px; text-align: center; font-size: 14px; color: var(--text-muted);">
+      <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400 text-sm">
         © 2026 TSOS. All rights reserved.
       </div>
     </div>
@@ -640,33 +580,7 @@
     }, { threshold: 0.1 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-    // FAQ accordion
-    function toggleFaq(btn) {
-      const answer = btn.nextElementSibling;
-      const icon = btn.querySelector('svg');
-      const isOpen = answer.classList.contains('open');
-
-      // Close all
-      document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
-      document.querySelectorAll('.faq-btn svg').forEach(s => s.classList.remove('rotated'));
-
-      if (!isOpen) {
-        answer.classList.add('open');
-        icon.classList.add('rotated');
-      }
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
-    });
   </script>
+
 </body>
 </html>
