@@ -39,6 +39,18 @@ val TextSecondary = Color(0xFF57534E)
 val TextMuted = Color(0xFFA8A29E)
 val TextInverse = Color(0xFFFFFFFF)
 
+// Legacy Tailwind-style aliases (used by screens)
+val Slate200 = Color(0xFFE9E0D6)
+val Slate400 = Color(0xFFA8A29E)
+val Slate700 = Color(0xFF57534E)
+val Slate800 = Color(0xFF3D3835)
+val Slate900 = Color(0xFF1C1917)
+val Emerald500 = Color(0xFF17803D)
+val Orange500 = Color(0xFFF97316)
+val Red500 = Color(0xFFB42318)
+val Amber500 = Color(0xFFB45309)
+val Purple500 = Color(0xFF7C3AED)
+
 // Surface
 val Surface = Color(0xFFFFFFFF)
 val SurfaceHover = Color(0xFFFDF8F0)
