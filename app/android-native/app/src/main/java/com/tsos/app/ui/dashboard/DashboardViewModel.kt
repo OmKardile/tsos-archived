@@ -42,7 +42,7 @@ class DashboardViewModel @Inject constructor(
                         totalRevenue = s.totalRevenue,
                         pendingOrders = s.pendingOrders,
                         totalCustomers = s.totalCustomers,
-                        periodLabel = s.periodLabel
+                        periodLabel = s.periodLabel ?: "Today"
                     )
                 }
                 .onFailure { _uiState.value = DashboardUiState(isLoading = false) }

@@ -154,11 +154,11 @@ data class Offer(
 )
 
 data class DashboardSummary(
-    @SerializedName("total_orders") val totalOrders: Int,
-    @SerializedName("total_revenue") val totalRevenue: Double,
-    @SerializedName("pending_orders") val pendingOrders: Int,
-    @SerializedName("total_customers") val totalCustomers: Int,
-    @SerializedName("period_label") val periodLabel: String = "Today"
+    @SerializedName("total_orders") val totalOrders: Int = 0,
+    @SerializedName("total_revenue") val totalRevenue: Double = 0.0,
+    @SerializedName("pending_orders") val pendingOrders: Int = 0,
+    @SerializedName("total_customers") val totalCustomers: Int = 0,
+    @SerializedName("period_label") val periodLabel: String? = null
 )
 
 data class ReportSummary(
