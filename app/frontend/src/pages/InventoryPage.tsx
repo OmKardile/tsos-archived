@@ -80,15 +80,15 @@ export default function InventoryPage() {
     load();
   };
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading inventory...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading inventory...</div>;
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Inventory</h1>
+        <h1 className="text-2xl font-bold text-text-primary">Inventory</h1>
         <button
           onClick={() => { setEditItem(null); setForm({ name: '', unit: 'g', stockQty: '', lowStockThreshold: '' }); setShowAdd(true); }}
-          className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium"
+          className="flex items-center gap-2 px-4 py-2 bg-action text-white rounded-lg hover:bg-action-hover text-sm font-medium"
         >
           <Plus className="w-4 h-4" /> Add Ingredient
         </button>
@@ -96,14 +96,14 @@ export default function InventoryPage() {
 
       {/* Low Stock Alert */}
       {lowStock.length > 0 && (
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+        <div className="bg-status-attention-soft border border-status-attention/30 rounded-xl p-4 mb-6">
           <div className="flex items-center gap-2 mb-2">
-            <AlertTriangle className="w-5 h-5 text-amber-600" />
-            <h2 className="font-semibold text-amber-800">Low Stock Alert</h2>
+            <AlertTriangle className="w-5 h-5 text-status-attention" />
+            <h2 className="font-semibold text-status-attention">Low Stock Alert</h2>
           </div>
           <div className="space-y-1">
             {lowStock.map(item => (
-              <p key={item.id} className="text-sm text-amber-700">
+              <p key={item.id} className="text-sm text-status-attention">
                 {item.name}: {item.stock_qty} {item.unit} remaining (threshold: {item.low_stock_threshold})
               </p>
             ))}
@@ -112,30 +112,30 @@ export default function InventoryPage() {
       )}
 
       {/* Ingredients Table */}
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-surface border border-divider rounded-xl overflow-hidden">
         <table className="w-full">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-cream-50 border-b border-divider">
             <tr>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Name</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Stock</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Unit</th>
-              <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Threshold</th>
-              <th className="text-right px-4 py-3 text-sm font-medium text-gray-500">Actions</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Name</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Stock</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Unit</th>
+              <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Threshold</th>
+              <th className="text-right px-4 py-3 text-sm font-medium text-text-muted">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-divider">
             {ingredients.map(item => (
-              <tr key={item.id} className={item.stock_qty <= item.low_stock_threshold && item.low_stock_threshold > 0 ? 'bg-amber-50' : ''}>
-                <td className="px-4 py-3 text-sm font-medium text-gray-900">{item.name}</td>
-                <td className="px-4 py-3 text-sm text-gray-700">{item.stock_qty}</td>
-                <td className="px-4 py-3 text-sm text-gray-500">{item.unit}</td>
-                <td className="px-4 py-3 text-sm text-gray-500">{item.low_stock_threshold}</td>
+              <tr key={item.id} className={item.stock_qty <= item.low_stock_threshold && item.low_stock_threshold > 0 ? 'bg-status-attention-soft' : ''}>
+                <td className="px-4 py-3 text-sm font-medium text-text-primary">{item.name}</td>
+                <td className="px-4 py-3 text-sm text-text-secondary">{item.stock_qty}</td>
+                <td className="px-4 py-3 text-sm text-text-muted">{item.unit}</td>
+                <td className="px-4 py-3 text-sm text-text-muted">{item.low_stock_threshold}</td>
                 <td className="px-4 py-3 text-right">
-                  <button onClick={() => openEdit(item)} className="p-1 hover:bg-gray-100 rounded mr-1">
-                    <Pencil className="w-4 h-4 text-gray-500" />
+                  <button onClick={() => openEdit(item)} className="p-1 hover:bg-cream-200 rounded mr-1">
+                    <Pencil className="w-4 h-4 text-text-muted" />
                   </button>
-                  <button onClick={() => handleDelete(item.id)} className="p-1 hover:bg-red-50 rounded">
-                    <Trash2 className="w-4 h-4 text-red-500" />
+                  <button onClick={() => handleDelete(item.id)} className="p-1 hover:bg-status-destructive-soft rounded">
+                    <Trash2 className="w-4 h-4 text-status-destructive" />
                   </button>
                 </td>
               </tr>
@@ -146,11 +146,11 @@ export default function InventoryPage() {
 
       {/* Add/Edit Modal */}
       {showAdd && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6">
+        <div className="fixed inset-0 bg-overlay flex items-center justify-center z-50 p-4">
+          <div className="bg-surface rounded-2xl w-full max-w-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">{editItem ? 'Edit Ingredient' : 'Add Ingredient'}</h2>
-              <button onClick={() => setShowAdd(false)} className="p-1 hover:bg-gray-100 rounded-lg">
+              <button onClick={() => setShowAdd(false)} className="p-1 hover:bg-cream-200 rounded-lg">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -159,12 +159,12 @@ export default function InventoryPage() {
                 placeholder="Name"
                 value={form.name}
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
               />
               <select
                 value={form.unit}
                 onChange={(e) => setForm({ ...form, unit: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
               >
                 <option value="g">Grams (g)</option>
                 <option value="kg">Kilograms (kg)</option>
@@ -178,20 +178,20 @@ export default function InventoryPage() {
                   placeholder="Current stock"
                   value={form.stockQty}
                   onChange={(e) => setForm({ ...form, stockQty: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
                 <input
                   type="number"
                   placeholder="Low stock threshold"
                   value={form.lowStockThreshold}
                   onChange={(e) => setForm({ ...form, lowStockThreshold: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setShowAdd(false)} className="flex-1 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50">Cancel</button>
-              <button onClick={save} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">
+              <button onClick={() => setShowAdd(false)} className="flex-1 py-2 border border-divider rounded-lg text-sm font-medium hover:bg-cream-50">Cancel</button>
+              <button onClick={save} className="flex-1 py-2 bg-action text-white rounded-lg text-sm font-medium hover:bg-action-hover">
                 {editItem ? 'Update' : 'Add'}
               </button>
             </div>

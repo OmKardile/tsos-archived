@@ -74,16 +74,16 @@ export default function CustomersPage() {
     }
   };
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading...</div>;
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Customers & Offers</h1>
+        <h1 className="text-2xl font-bold text-text-primary">Customers & Offers</h1>
         {tab === 'offers' && (
           <button
             onClick={() => setShowOffer(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-action text-white rounded-lg hover:bg-action-hover text-sm font-medium"
           >
             <Plus className="w-4 h-4" /> Add Offer
           </button>
@@ -94,7 +94,7 @@ export default function CustomersPage() {
         <button
           onClick={() => setTab('customers')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            tab === 'customers' ? 'bg-emerald-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+            tab === 'customers' ? 'bg-action text-white' : 'bg-surface border border-divider text-text-secondary hover:bg-cream-50'
           }`}
         >
           <Users className="w-4 h-4 inline mr-1" /> Customers ({customers.length})
@@ -102,7 +102,7 @@ export default function CustomersPage() {
         <button
           onClick={() => setTab('offers')}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
-            tab === 'offers' ? 'bg-emerald-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+            tab === 'offers' ? 'bg-action text-white' : 'bg-surface border border-divider text-text-secondary hover:bg-cream-50'
           }`}
         >
           <Gift className="w-4 h-4 inline mr-1" /> Offers ({offers.length})
@@ -110,25 +110,25 @@ export default function CustomersPage() {
       </div>
 
       {tab === 'customers' ? (
-        <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+        <div className="bg-surface border border-divider rounded-xl overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-cream-50 border-b border-divider">
               <tr>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Customer</th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Phone</th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Orders</th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Spent</th>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-500">Points</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Customer</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Phone</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Orders</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Spent</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-text-muted">Points</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-divider">
               {customers.map(c => (
                 <tr key={c.id}>
-                  <td className="px-4 py-3 text-sm font-medium text-gray-900">{c.name || 'Guest'}</td>
-                  <td className="px-4 py-3 text-sm text-gray-500">{c.phone}</td>
-                  <td className="px-4 py-3 text-sm text-gray-700">{c.total_orders}</td>
-                  <td className="px-4 py-3 text-sm text-gray-700">₹{Number(c.total_spent).toFixed(0)}</td>
-                  <td className="px-4 py-3 text-sm text-emerald-600 font-medium">{c.loyalty_points}</td>
+                  <td className="px-4 py-3 text-sm font-medium text-text-primary">{c.name || 'Guest'}</td>
+                  <td className="px-4 py-3 text-sm text-text-muted">{c.phone}</td>
+                  <td className="px-4 py-3 text-sm text-text-secondary">{c.total_orders}</td>
+                  <td className="px-4 py-3 text-sm text-text-secondary">₹{Number(c.total_spent).toFixed(0)}</td>
+                  <td className="px-4 py-3 text-sm text-action font-medium">{c.loyalty_points}</td>
                 </tr>
               ))}
             </tbody>
@@ -137,18 +137,18 @@ export default function CustomersPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {offers.map(offer => (
-            <div key={offer.id} className="bg-white border border-gray-200 rounded-xl p-4">
+            <div key={offer.id} className="bg-surface border border-divider rounded-xl p-4">
               <div className="flex items-center justify-between mb-2">
-                <h3 className="font-semibold text-gray-900">{offer.title}</h3>
-                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${offer.is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-100 text-gray-500'}`}>
+                <h3 className="font-semibold text-text-primary">{offer.title}</h3>
+                <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${offer.is_active ? 'bg-status-completed-soft text-status-completed' : 'bg-cream-200 text-text-muted'}`}>
                   {offer.is_active ? 'Active' : 'Inactive'}
                 </span>
               </div>
-              <p className="text-lg font-bold text-gray-900 mb-1">
+              <p className="text-lg font-bold text-text-primary mb-1">
                 {offer.type === 'percent' ? `${offer.value}% off` : offer.type === 'flat' ? `₹${offer.value} off` : 'BOGO'}
               </p>
               {offer.min_order_value > 0 && (
-                <p className="text-xs text-gray-500">Min order: ₹{offer.min_order_value}</p>
+                <p className="text-xs text-text-muted">Min order: ₹{offer.min_order_value}</p>
               )}
             </div>
           ))}
@@ -157,23 +157,23 @@ export default function CustomersPage() {
 
       {/* Add Offer Modal */}
       {showOffer && (
-        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl w-full max-w-md p-6">
+        <div className="fixed inset-0 bg-overlay flex items-center justify-center z-50 p-4">
+          <div className="bg-surface rounded-2xl w-full max-w-md p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold">Add Offer</h2>
-              <button onClick={() => setShowOffer(false)} className="p-1 hover:bg-gray-100 rounded-lg">✕</button>
+              <button onClick={() => setShowOffer(false)} className="p-1 hover:bg-cream-200 rounded-lg">✕</button>
             </div>
             <div className="space-y-3">
               <input
                 placeholder="Offer title"
                 value={offerForm.title}
                 onChange={(e) => setOfferForm({ ...offerForm, title: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
               />
               <select
                 value={offerForm.type}
                 onChange={(e) => setOfferForm({ ...offerForm, type: e.target.value })}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                className="w-full px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
               >
                 <option value="flat">Flat Discount (₹)</option>
                 <option value="percent">Percentage Discount (%)</option>
@@ -185,14 +185,14 @@ export default function CustomersPage() {
                   placeholder="Value"
                   value={offerForm.value}
                   onChange={(e) => setOfferForm({ ...offerForm, value: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
                 <input
                   type="number"
                   placeholder="Min order ₹"
                   value={offerForm.minOrderValue}
                   onChange={(e) => setOfferForm({ ...offerForm, minOrderValue: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
               </div>
               <div className="flex gap-3">
@@ -201,20 +201,20 @@ export default function CustomersPage() {
                   placeholder="Valid from"
                   value={offerForm.validFrom}
                   onChange={(e) => setOfferForm({ ...offerForm, validFrom: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
                 <input
                   type="date"
                   placeholder="Valid to"
                   value={offerForm.validTo}
                   onChange={(e) => setOfferForm({ ...offerForm, validTo: e.target.value })}
-                  className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
+                  className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm focus:ring-2 focus:ring-action outline-none"
                 />
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setShowOffer(false)} className="flex-1 py-2 border border-gray-200 rounded-lg text-sm font-medium hover:bg-gray-50">Cancel</button>
-              <button onClick={saveOffer} className="flex-1 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">Save Offer</button>
+              <button onClick={() => setShowOffer(false)} className="flex-1 py-2 border border-divider rounded-lg text-sm font-medium hover:bg-cream-50">Cancel</button>
+              <button onClick={saveOffer} className="flex-1 py-2 bg-action text-white rounded-lg text-sm font-medium hover:bg-action-hover">Save Offer</button>
             </div>
           </div>
         </div>

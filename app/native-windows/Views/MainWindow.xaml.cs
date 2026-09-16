@@ -102,7 +102,7 @@ public partial class MainWindow : Window
             {
                 var isActive = navBtn.Tag?.ToString() == key;
                 navBtn.Background = isActive
-                    ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#1E293B"))
+                    ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFF1E6"))
                     : Brushes.Transparent;
             }
         }

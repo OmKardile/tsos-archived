@@ -133,7 +133,7 @@ export default function POSPage() {
     }
   };
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading POS...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading POS...</div>;
 
   return (
     <div className="flex h-[calc(100vh-4rem)] gap-4">
@@ -147,8 +147,8 @@ export default function POSPage() {
               onClick={() => setSelectedCategory(cat)}
               className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition ${
                 selectedCategory === cat
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                  ? 'bg-action text-white'
+                  : 'bg-surface border border-divider text-text-secondary hover:bg-cream-50'
               }`}
             >
               {cat}
@@ -164,28 +164,28 @@ export default function POSPage() {
               <button
                 key={item.id}
                 onClick={() => addToCart(item)}
-                className="bg-white border border-gray-200 rounded-xl p-4 text-left hover:border-emerald-300 hover:shadow-md transition"
+                className="bg-surface border border-divider rounded-xl p-4 text-left hover:border-action hover:shadow-md transition"
               >
                 <div className="flex items-center gap-2 mb-2">
                   <span className={`w-4 h-4 rounded-sm flex items-center justify-center text-[10px] font-bold ${
-                    item.is_veg ? 'bg-green-500 text-white' : 'bg-red-500 text-white'
+                    item.is_veg ? 'bg-status-completed text-white' : 'bg-status-destructive text-white'
                   }`}>
                     {item.is_veg ? 'V' : 'N'}
                   </span>
-                  <span className="text-sm font-medium text-gray-900 truncate">{item.name}</span>
+                  <span className="text-sm font-medium text-text-primary truncate">{item.name}</span>
                 </div>
-                <p className="text-lg font-bold text-gray-900">₹{Number(item.price).toFixed(0)}</p>
+                <p className="text-lg font-bold text-text-primary">₹{Number(item.price).toFixed(0)}</p>
               </button>
             ))}
         </div>
       </div>
 
       {/* Cart */}
-      <div className="w-96 bg-white border border-gray-200 rounded-xl flex flex-col">
-        <div className="p-4 border-b border-gray-100">
+      <div className="w-96 bg-surface border border-divider rounded-xl flex flex-col">
+        <div className="p-4 border-b border-divider">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="font-semibold text-gray-900">Current Order</h2>
-            <span className="text-sm text-gray-500">{cart.length} items</span>
+            <h2 className="font-semibold text-text-primary">Current Order</h2>
+            <span className="text-sm text-text-muted">{cart.length} items</span>
           </div>
           <div className="flex gap-2">
             {(['dine_in', 'takeaway', 'delivery'] as const).map(type => (
@@ -194,8 +194,8 @@ export default function POSPage() {
                 onClick={() => setOrderType(type)}
                 className={`flex-1 py-1.5 text-xs font-medium rounded-lg transition ${
                   orderType === type
-                    ? 'bg-emerald-100 text-emerald-700'
-                    : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                    ? 'bg-action-soft text-action'
+                    : 'bg-cream-200 text-text-muted hover:bg-cream-300'
                 }`}
               >
                 {type === 'dine_in' ? 'Dine In' : type === 'takeaway' ? 'Takeaway' : 'Delivery'}
@@ -207,34 +207,34 @@ export default function POSPage() {
         {/* Cart items */}
         <div className="flex-1 overflow-auto p-4 space-y-3">
           {cart.length === 0 ? (
-            <div className="text-center text-gray-400 py-8">
+            <div className="text-center text-text-muted py-8">
               <ShoppingBag className="w-12 h-12 mx-auto mb-2 opacity-50" />
               <p className="text-sm">Tap items to add to order</p>
             </div>
           ) : (
             cart.map((item, i) => (
-              <div key={i} className="bg-gray-50 rounded-lg p-3">
+              <div key={i} className="bg-cream-50 rounded-lg p-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{item.menuItem.name}</p>
-                    <p className="text-xs text-gray-500">₹{Number(item.menuItem.price).toFixed(0)} each</p>
+                    <p className="text-sm font-medium text-text-primary truncate">{item.menuItem.name}</p>
+                    <p className="text-xs text-text-muted">₹{Number(item.menuItem.price).toFixed(0)} each</p>
                   </div>
-                  <button onClick={() => removeItem(i)} className="p-1 hover:bg-red-100 rounded">
-                    <Trash2 className="w-3 h-3 text-red-500" />
+                  <button onClick={() => removeItem(i)} className="p-1 hover:bg-status-destructive-soft rounded">
+                    <Trash2 className="w-3 h-3 text-status-destructive" />
                   </button>
                 </div>
                 <div className="flex items-center justify-between mt-2">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => updateQty(i, -1)}
-                      className="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+                      className="w-7 h-7 rounded-full bg-surface border border-divider flex items-center justify-center hover:bg-cream-50"
                     >
                       <Minus className="w-3 h-3" />
                     </button>
                     <span className="text-sm font-medium w-6 text-center">{item.qty}</span>
                     <button
                       onClick={() => updateQty(i, 1)}
-                      className="w-7 h-7 rounded-full bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50"
+                      className="w-7 h-7 rounded-full bg-surface border border-divider flex items-center justify-center hover:bg-cream-50"
                     >
                       <Plus className="w-3 h-3" />
                     </button>
@@ -247,22 +247,22 @@ export default function POSPage() {
         </div>
 
         {/* Totals */}
-        <div className="border-t border-gray-200 p-4 space-y-2">
-          <div className="flex justify-between text-sm text-gray-600">
+        <div className="border-t border-divider p-4 space-y-2">
+          <div className="flex justify-between text-sm text-text-secondary">
             <span>Subtotal</span>
             <span>₹{subtotal.toFixed(0)}</span>
           </div>
-          <div className="flex justify-between text-sm text-gray-600">
+          <div className="flex justify-between text-sm text-text-secondary">
             <span>Tax (5%)</span>
             <span>₹{taxTotal.toFixed(0)}</span>
           </div>
           {discount > 0 && (
-            <div className="flex justify-between text-sm text-emerald-600">
+            <div className="flex justify-between text-sm text-status-completed">
               <span>Discount</span>
               <span>-₹{discount.toFixed(0)}</span>
             </div>
           )}
-          <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t">
+          <div className="flex justify-between text-lg font-bold text-text-primary pt-2 border-t">
             <span>Total</span>
             <span>₹{grandTotal.toFixed(0)}</span>
           </div>
@@ -274,7 +274,7 @@ export default function POSPage() {
               placeholder="Discount ₹"
               value={discount || ''}
               onChange={(e) => setDiscount(Number(e.target.value) || 0)}
-              className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm"
+              className="flex-1 px-3 py-2 border border-divider rounded-lg text-sm"
             />
           </div>
 
@@ -286,8 +286,8 @@ export default function POSPage() {
                 onClick={() => setPaymentMethod(method)}
                 className={`flex-1 py-2 text-xs font-medium rounded-lg transition ${
                   paymentMethod === method
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-action text-white'
+                    : 'bg-cream-200 text-text-secondary hover:bg-cream-300'
                 }`}
               >
                 {method.toUpperCase()}
@@ -298,7 +298,7 @@ export default function POSPage() {
           <button
             onClick={placeOrder}
             disabled={cart.length === 0 || placing}
-            className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 text-white font-medium rounded-xl transition mt-2"
+            className="w-full py-3 bg-action hover:bg-action-hover disabled:bg-cream-300 text-white font-medium rounded-xl transition mt-2"
           >
             {placing ? 'Placing...' : `Place Order • ₹${grandTotal.toFixed(0)}`}
           </button>

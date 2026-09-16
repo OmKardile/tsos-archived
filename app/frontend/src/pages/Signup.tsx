@@ -47,109 +47,109 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-cream-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight">TSOS</h1>
-          <p className="text-gray-500 mt-1">Create your cafe account</p>
+          <h1 className="text-3xl font-bold text-text-primary tracking-tight">TSOS</h1>
+          <p className="text-text-muted mt-1">Create your cafe account</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-surface rounded-2xl shadow-xl p-8">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Your Name</label>
               <input
                 type="text"
                 name="name"
                 value={form.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Password</label>
               <input
                 type="password"
                 name="password"
                 value={form.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 minLength={6}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Business Name</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Business Name</label>
               <input
                 type="text"
                 name="businessName"
                 value={form.businessName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 placeholder="My Cafe"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">First Location Name</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">First Location Name</label>
               <input
                 type="text"
                 name="locationName"
                 value={form.locationName}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 placeholder="Main Branch"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Location URL Slug</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Location URL Slug</label>
               <input
                 type="text"
                 name="locationSlug"
                 value={form.locationSlug}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-transparent outline-none transition"
+                className="w-full px-4 py-3 border border-divider rounded-xl focus:ring-2 focus:ring-action focus:border-transparent outline-none transition"
                 placeholder="main-branch"
                 pattern="[a-z0-9-]+"
                 required
               />
-              <p className="text-xs text-gray-400 mt-1">Lowercase letters, numbers, and dashes only</p>
+              <p className="text-xs text-text-muted mt-1">Lowercase letters, numbers, and dashes only</p>
             </div>
 
             {error && (
-              <div className="bg-red-50 text-red-600 text-sm px-4 py-2 rounded-lg">{error}</div>
+              <div className="bg-status-destructive-soft text-status-destructive text-sm px-4 py-2 rounded-lg">{error}</div>
             )}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-gray-300 text-white font-medium rounded-xl transition"
+              className="w-full py-3 bg-action hover:bg-action-hover disabled:bg-cream-300 text-white font-medium rounded-xl transition"
             >
               {loading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-500">
+          <div className="mt-6 text-center text-sm text-text-muted">
             Already have an account?{' '}
-            <Link to="/login" className="text-emerald-600 hover:text-emerald-700 font-medium">
+            <Link to="/login" className="text-action hover:text-action-hover font-medium">
               Sign in
             </Link>
           </div>

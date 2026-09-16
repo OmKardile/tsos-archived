@@ -31,12 +31,12 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <Border Width="160" Margin="6" Cursor="Hand"
-                                    Background="White" BorderBrush="{StaticResource BorderBrush}" 
+                                    Background="White" BorderBrush="{StaticResource DividerBrush}" 
                                     BorderThickness="1" CornerRadius="10" Padding="12"
                                     MouseLeftButtonDown="MenuItem_Click" Tag="{Binding}">
                                 <StackPanel>
-                                    <Border Background="#F0FDF4" CornerRadius="8" Height="60" 
-                                            Margin="0,0,0,8">
+                                    <Border Background="{StaticResource CompletedSoftBrush}" CornerRadius="8" Height="60" 
+                                             Margin="0,0,0,8">
                                         <TextBlock Text="☕" FontSize="28" HorizontalAlignment="Center" 
                                                    VerticalAlignment="Center"/>
                                     </Border>
@@ -54,11 +54,11 @@
         </DockPanel>
 
         <!-- Cart -->
-        <Border Grid.Column="1" Background="White" BorderBrush="{StaticResource BorderBrush}" 
+        <Border Grid.Column="1" Background="White" BorderBrush="{StaticResource DividerBrush}" 
                 BorderThickness="1" CornerRadius="12">
             <DockPanel>
                 <!-- Cart Header -->
-                <Border DockPanel.Dock="Top" Padding="16,14" BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,1">
+                <Border DockPanel.Dock="Top" Padding="16,14" BorderBrush="{StaticResource DividerBrush}" BorderThickness="0,0,0,1">
                     <Grid>
                         <TextBlock Text="Current Order" FontSize="16" FontWeight="SemiBold"/>
                         <Button Content="Clear" HorizontalAlignment="Right" Background="Transparent" 
@@ -68,7 +68,7 @@
                 </Border>
 
                 <!-- Cart Footer -->
-                <Border DockPanel.Dock="Bottom" Padding="16,12" BorderBrush="{StaticResource BorderBrush}" 
+                <Border DockPanel.Dock="Bottom" Padding="16,12" BorderBrush="{StaticResource DividerBrush}" 
                         BorderThickness="0,1,0,0">
                     <StackPanel>
                         <Grid Margin="0,0,0,4">
@@ -107,7 +107,7 @@
                     <ItemsControl x:Name="CartList" Margin="12,8">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Padding="8,8" BorderBrush="{StaticResource BorderBrush}" 
+                                <Border Padding="8,8" BorderBrush="{StaticResource DividerBrush}" 
                                         BorderThickness="0,0,0,1">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -126,13 +126,13 @@
                                             <Button Content="−" Width="28" Height="28" FontSize="14"
                                                     Click="DecreaseQty_Click" Tag="{Binding}" 
                                                     Background="Transparent" BorderThickness="1"
-                                                    BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                                                    BorderBrush="{StaticResource DividerBrush}" Cursor="Hand"/>
                                             <TextBlock Text="{Binding Quantity}" Width="32" TextAlignment="Center" 
                                                        VerticalAlignment="Center" FontWeight="SemiBold"/>
                                             <Button Content="+" Width="28" Height="28" FontSize="14"
                                                     Click="IncreaseQty_Click" Tag="{Binding}"
                                                     Background="Transparent" BorderThickness="1"
-                                                    BorderBrush="{StaticResource BorderBrush}" Cursor="Hand"/>
+                                                    BorderBrush="{StaticResource DividerBrush}" Cursor="Hand"/>
                                         </StackPanel>
                                     </Grid>
                                 </Border>

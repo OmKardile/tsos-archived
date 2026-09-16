@@ -27,11 +27,11 @@ export default function Overview() {
   }, [activeLocationId]);
 
   if (loading) {
-    return <div className="animate-pulse text-gray-400">Loading dashboard...</div>;
+    return <div className="animate-pulse text-text-muted">Loading dashboard...</div>;
   }
 
   if (!summary) {
-    return <div className="text-gray-500">No data available</div>;
+    return <div className="text-text-muted">No data available</div>;
   }
 
   const cards = [
@@ -40,48 +40,48 @@ export default function Overview() {
       value: summary.totalOrders,
       change: summary.ordersChange,
       icon: ShoppingBag,
-      color: 'bg-blue-50 text-blue-600',
+      color: 'bg-status-info-soft text-status-info',
     },
     {
       label: 'Revenue',
       value: `₹${summary.totalRevenue.toLocaleString('en-IN')}`,
       change: summary.revenueChange,
       icon: IndianRupee,
-      color: 'bg-emerald-50 text-emerald-600',
+      color: 'bg-status-completed-soft text-status-completed',
     },
     {
       label: 'Pending Orders',
       value: summary.pendingOrders,
       change: null,
       icon: Clock,
-      color: 'bg-amber-50 text-amber-600',
+      color: 'bg-status-attention-soft text-status-attention',
     },
     {
       label: 'Active Customers',
       value: summary.activeCustomers,
       change: null,
       icon: Users,
-      color: 'bg-purple-50 text-purple-600',
+      color: 'bg-status-accent-soft text-status-accent',
     },
   ];
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-text-primary mb-6">Dashboard</h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {cards.map((card) => (
-          <div key={card.label} className="bg-white rounded-xl border border-gray-200 p-5">
+          <div key={card.label} className="bg-surface rounded-xl border border-divider p-5">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-gray-500">{card.label}</span>
+              <span className="text-sm text-text-muted">{card.label}</span>
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${card.color}`}>
                 <card.icon className="w-5 h-5" />
               </div>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-2xl font-bold text-gray-900">{card.value}</span>
+              <span className="text-2xl font-bold text-text-primary">{card.value}</span>
               {card.change !== null && (
-                <span className={`text-xs font-medium mb-1 ${card.change >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                <span className={`text-xs font-medium mb-1 ${card.change >= 0 ? 'text-status-completed' : 'text-status-destructive'}`}>
                   {card.change >= 0 ? '+' : ''}{card.change}%
                 </span>
               )}
@@ -90,9 +90,9 @@ export default function Overview() {
         ))}
       </div>
 
-      <div className="mt-8 bg-white rounded-xl border border-gray-200 p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Orders</h2>
-        <p className="text-gray-500 text-sm">Live order feed will appear here (Phase 2).</p>
+      <div className="mt-8 bg-surface rounded-xl border border-divider p-6">
+        <h2 className="text-lg font-semibold text-text-primary mb-4">Recent Orders</h2>
+        <p className="text-text-muted text-sm">Live order feed will appear here (Phase 2).</p>
       </div>
     </div>
   );

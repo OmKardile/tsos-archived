@@ -17,9 +17,9 @@ interface Order {
 }
 
 const columns = [
-  { key: 'new', label: 'New', color: 'bg-blue-50 border-blue-200' },
-  { key: 'preparing', label: 'Preparing', color: 'bg-amber-50 border-amber-200' },
-  { key: 'ready', label: 'Ready', color: 'bg-emerald-50 border-emerald-200' },
+  { key: 'new', label: 'New', color: 'bg-status-info-soft border-status-info/30' },
+  { key: 'preparing', label: 'Preparing', color: 'bg-status-attention-soft border-status-attention/30' },
+  { key: 'ready', label: 'Ready', color: 'bg-status-completed-soft border-status-completed/30' },
 ];
 
 export default function KDSPage() {
@@ -70,13 +70,13 @@ export default function KDSPage() {
     }
   };
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading KDS...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading KDS...</div>;
 
   return (
     <div className="h-[calc(100vh-4rem)] flex flex-col">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold text-gray-900">Kitchen Display</h1>
-        <div className="flex gap-4 text-sm text-gray-500">
+        <h1 className="text-2xl font-bold text-text-primary">Kitchen Display</h1>
+        <div className="flex gap-4 text-sm text-text-muted">
           {columns.map(col => (
             <span key={col.key}>
               {col.label}: {orders.filter(o => o.status === col.key).length}
@@ -89,7 +89,7 @@ export default function KDSPage() {
         {columns.map(col => (
           <div key={col.key} className={`flex-1 flex flex-col rounded-xl border-2 ${col.color}`}>
             <div className="p-3 border-b border-current/10">
-              <h2 className="font-semibold text-gray-900 text-center">{col.label}</h2>
+              <h2 className="font-semibold text-text-primary text-center">{col.label}</h2>
             </div>
             <div className="flex-1 overflow-auto p-3 space-y-3">
               {orders
@@ -98,11 +98,11 @@ export default function KDSPage() {
                 .map(order => {
                   const elapsed = Math.floor((Date.now() - new Date(order.created_at).getTime()) / 60000);
                   return (
-                    <div key={order.id} className="bg-white rounded-lg p-3 shadow-sm border border-gray-100">
+                    <div key={order.id} className="bg-surface rounded-lg p-3 shadow-sm border border-divider">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-mono text-sm text-gray-500">#{order.id.slice(0, 6)}</span>
+                        <span className="font-mono text-sm text-text-muted">#{order.id.slice(0, 6)}</span>
                         {order.table_label && (
-                          <span className="text-xs bg-gray-100 px-2 py-0.5 rounded font-medium">
+                          <span className="text-xs bg-cream-200 px-2 py-0.5 rounded font-medium">
                             {order.table_label}
                           </span>
                         )}
@@ -111,11 +111,11 @@ export default function KDSPage() {
                       <div className="space-y-1 mb-3">
                         {order.items?.map((item, i) => (
                           <div key={i} className="flex items-start gap-2">
-                            <span className="text-sm font-bold text-gray-900">{item.qty}x</span>
+                            <span className="text-sm font-bold text-text-primary">{item.qty}x</span>
                             <div className="flex-1">
-                              <span className="text-sm text-gray-700">{item.name}</span>
+                              <span className="text-sm text-text-secondary">{item.name}</span>
                               {item.notes && (
-                                <p className="text-xs text-amber-600 italic">{item.notes}</p>
+                                <p className="text-xs text-status-attention italic">{item.notes}</p>
                               )}
                             </div>
                           </div>
@@ -123,12 +123,12 @@ export default function KDSPage() {
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <span className={`text-xs font-medium ${elapsed > 10 ? 'text-red-500' : 'text-gray-400'}`}>
+                        <span className={`text-xs font-medium ${elapsed > 10 ? 'text-status-destructive' : 'text-text-muted'}`}>
                           {elapsed}m ago
                         </span>
                         <button
                           onClick={() => advanceStatus(order)}
-                          className="flex items-center gap-1 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg hover:bg-emerald-700 transition"
+                          className="flex items-center gap-1 px-3 py-1.5 bg-action text-white text-xs font-medium rounded-lg hover:bg-action-hover transition"
                         >
                           {col.key === 'ready' ? (
                             <><Check className="w-3 h-3" /> Served</>

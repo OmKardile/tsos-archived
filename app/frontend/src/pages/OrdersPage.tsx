@@ -18,12 +18,12 @@ interface Order {
 }
 
 const statusColors: Record<string, string> = {
-  new: 'bg-blue-100 text-blue-700',
-  preparing: 'bg-amber-100 text-amber-700',
-  ready: 'bg-emerald-100 text-emerald-700',
-  served: 'bg-purple-100 text-purple-700',
-  completed: 'bg-gray-100 text-gray-500',
-  cancelled: 'bg-red-100 text-red-500',
+  new: 'bg-status-info-soft text-status-info',
+  preparing: 'bg-status-attention-soft text-status-attention',
+  ready: 'bg-status-completed-soft text-status-completed',
+  served: 'bg-status-accent-soft text-status-accent',
+  completed: 'bg-cream-200 text-text-muted',
+  cancelled: 'bg-status-destructive-soft text-status-destructive',
 };
 
 const statusIcons: Record<string, any> = {
@@ -85,12 +85,12 @@ export default function OrdersPage() {
     }
   };
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading orders...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading orders...</div>;
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Orders</h1>
+        <h1 className="text-2xl font-bold text-text-primary">Orders</h1>
         <div className="flex gap-2">
           {['', 'new', 'preparing', 'ready', 'served'].map(s => (
             <button
@@ -98,8 +98,8 @@ export default function OrdersPage() {
               onClick={() => setFilter(s)}
               className={`px-3 py-1.5 text-sm font-medium rounded-lg transition ${
                 filter === s
-                  ? 'bg-emerald-600 text-white'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                  ? 'bg-action text-white'
+                  : 'bg-surface border border-divider text-text-secondary hover:bg-cream-50'
               }`}
             >
               {s || 'All'}
@@ -109,7 +109,7 @@ export default function OrdersPage() {
       </div>
 
       {orders.length === 0 ? (
-        <div className="bg-white border border-gray-200 rounded-xl p-8 text-center text-gray-500">
+        <div className="bg-surface border border-divider rounded-xl p-8 text-center text-text-muted">
           No orders found
         </div>
       ) : (
@@ -117,12 +117,12 @@ export default function OrdersPage() {
           {orders.map(order => {
             const StatusIcon = statusIcons[order.status] || Clock;
             return (
-              <div key={order.id} className="bg-white border border-gray-200 rounded-xl p-4">
+              <div key={order.id} className="bg-surface border border-divider rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-sm font-mono text-gray-500">#{order.id.slice(0, 8)}</span>
+                    <span className="text-sm font-mono text-text-muted">#{order.id.slice(0, 8)}</span>
                     {order.table_label && (
-                      <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">{order.table_label}</span>
+                      <span className="text-xs bg-cream-200 px-2 py-0.5 rounded">{order.table_label}</span>
                     )}
                   </div>
                   <span className={`px-2 py-1 rounded-full text-xs font-medium flex items-center gap-1 ${statusColors[order.status]}`}>
@@ -134,26 +134,26 @@ export default function OrdersPage() {
                 <div className="space-y-1 mb-3">
                   {order.items?.slice(0, 3).map((item, i) => (
                     <div key={i} className="flex justify-between text-sm">
-                      <span className="text-gray-600">{item.qty}x {item.name}</span>
-                      <span className="text-gray-900">₹{Number(item.unitPrice).toFixed(0)}</span>
+                      <span className="text-text-secondary">{item.qty}x {item.name}</span>
+                      <span className="text-text-primary">₹{Number(item.unitPrice).toFixed(0)}</span>
                     </div>
                   ))}
                   {order.items?.length > 3 && (
-                    <p className="text-xs text-gray-400">+{order.items.length - 3} more items</p>
+                    <p className="text-xs text-text-muted">+{order.items.length - 3} more items</p>
                   )}
                 </div>
 
-                <div className="flex items-center justify-between pt-3 border-t border-gray-100">
+                <div className="flex items-center justify-between pt-3 border-t border-divider">
                   <div>
-                    <p className="text-lg font-bold text-gray-900">₹{Number(order.grand_total).toFixed(0)}</p>
-                    <p className={`text-xs ${order.payment_status === 'paid' ? 'text-emerald-600' : 'text-amber-600'}`}>
+                    <p className="text-lg font-bold text-text-primary">₹{Number(order.grand_total).toFixed(0)}</p>
+                    <p className={`text-xs ${order.payment_status === 'paid' ? 'text-status-completed' : 'text-status-attention'}`}>
                       {order.payment_status}
                     </p>
                   </div>
                   {order.status !== 'completed' && order.status !== 'cancelled' && (
                     <button
                       onClick={() => advanceStatus(order)}
-                      className="px-4 py-2 bg-emerald-600 text-white text-sm font-medium rounded-lg hover:bg-emerald-700 transition"
+                      className="px-4 py-2 bg-action text-white text-sm font-medium rounded-lg hover:bg-action-hover transition"
                     >
                       {order.status === 'new' ? 'Start Preparing' :
                        order.status === 'preparing' ? 'Mark Ready' :
@@ -162,7 +162,7 @@ export default function OrdersPage() {
                   )}
                 </div>
 
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-xs text-text-muted mt-2">
                   {new Date(order.created_at).toLocaleTimeString('en-IN')}
                 </p>
               </div>

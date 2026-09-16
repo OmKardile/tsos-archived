@@ -1,0 +1,162 @@
+{
+  "meta": {
+    "name": "TSOS Design System",
+    "version": "1.0.0",
+    "description": "Shared design tokens for web, Android native, and Windows WPF apps"
+  },
+  "color": {
+    "primitive": {
+      "orange50":  "#FFF9F2",
+      "orange100": "#FFF1E6",
+      "orange200": "#FFD9B8",
+      "orange500": "#F97316",
+      "orange600": "#EA580C",
+      "orange700": "#C2410C",
+      "amber50":   "#FFF4E5",
+      "amber100":  "#FDE68A",
+      "amber500":  "#F59E0B",
+      "amber600":  "#B45309",
+      "amber700":  "#92400E",
+      "green50":   "#E8F5EC",
+      "green100":  "#D1FAE5",
+      "green500":  "#17803D",
+      "green600":  "#15803D",
+      "green700":  "#166534",
+      "red50":     "#FEF2F2",
+      "red100":    "#FEE2E2",
+      "red500":    "#EF4444",
+      "red600":    "#B42318",
+      "red700":    "#991B1B",
+      "blue50":    "#EFF6FF",
+      "blue100":   "#DBEAFE",
+      "blue500":   "#3B82F6",
+      "blue600":   "#2563EB",
+      "purple50":  "#F5F3FF",
+      "purple100": "#EDE9FE",
+      "purple500": "#8B5CF6",
+      "purple600": "#7C3AED",
+      "cream50":   "#FFF9F2",
+      "cream100":  "#FFF1E6",
+      "cream200":  "#F1E9E0",
+      "cream300":  "#E9E0D6",
+      "white":     "#FFFFFF",
+      "black":     "#000000"
+    },
+    "semantic": {
+      "background":       "#FFF9F2",
+      "surface":          "#FFFFFF",
+      "surfaceHover":     "#FDF8F0",
+      "divider":          "#E9E0D6",
+      "segmentedTrack":   "#F1E9E0",
+      "textPrimary":      "#1C1917",
+      "textSecondary":    "#57534E",
+      "textMuted":        "#A8A29E",
+      "textInverse":      "#FFFFFF",
+      "border":           "#E7E5E4",
+      "borderFocus":      "#F97316",
+      "overlay":          "rgba(0,0,0,0.4)"
+    },
+    "action": {
+      "primary":          "#F97316",
+      "primaryHover":     "#EA580C",
+      "primaryActive":    "#C2410C",
+      "primarySoft":      "#FFF1E6",
+      "primaryText":      "#FFFFFF"
+    },
+    "status": {
+      "completed":        "#17803D",
+      "completedSoft":    "#E8F5EC",
+      "completedText":    "#FFFFFF",
+      "attention":        "#B45309",
+      "attentionSoft":    "#FFF4E5",
+      "attentionText":    "#FFFFFF",
+      "destructive":      "#B42318",
+      "destructiveSoft":  "#FEF2F2",
+      "destructiveText":  "#FFFFFF",
+      "info":             "#2563EB",
+      "infoSoft":         "#EFF6FF",
+      "infoText":         "#FFFFFF",
+      "accent":           "#7C3AED",
+      "accentSoft":       "#F5F3FF",
+      "accentText":       "#FFFFFF"
+    },
+    "orderStatus": {
+      "new":        { "bg": "#EFF6FF", "text": "#2563EB", "dot": "#3B82F6" },
+      "preparing":  { "bg": "#FFF4E5", "text": "#B45309", "dot": "#F59E0B" },
+      "ready":      { "bg": "#E8F5EC", "text": "#17803D", "dot": "#17803D" },
+      "served":     { "bg": "#F5F3FF", "text": "#7C3AED", "dot": "#8B5CF6" },
+      "completed":  { "bg": "#F5F5F4", "text": "#78716C", "dot": "#A8A29E" },
+      "cancelled":  { "bg": "#FEF2F2", "text": "#B42318", "dot": "#EF4444" }
+    },
+    "tableStatus": {
+      "free":      { "bg": "#E8F5EC", "text": "#17803D" },
+      "occupied":  { "bg": "#FFF4E5", "text": "#B45309" },
+      "reserved":  { "bg": "#F5F3FF", "text": "#7C3AED" }
+    }
+  },
+  "typography": {
+    "fontFamily": "Inter",
+    "weights": {
+      "regular": 400,
+      "medium": 500,
+      "semibold": 600
+    },
+    "size": {
+      "xs":   12,
+      "sm":   14,
+      "base": 16,
+      "lg":   18,
+      "xl":   20,
+      "2xl":  24,
+      "3xl":  30,
+      "4xl":  36
+    },
+    "lineHeight": {
+      "tight":  1.25,
+      "normal": 1.5,
+      "loose":  1.75
+    }
+  },
+  "spacing": {
+    "unit": 4,
+    "xxs": 2,
+    "xs":  4,
+    "sm":  8,
+    "md":  12,
+    "lg":  16,
+    "xl":  20,
+    "2xl": 24,
+    "3xl": 32,
+    "4xl": 40,
+    "5xl": 48,
+    "6xl": 64
+  },
+  "radius": {
+    "sm":   4,
+    "md":   8,
+    "lg":   12,
+    "xl":   16,
+    "2xl":  24,
+    "full": 9999
+  },
+  "shadow": {
+    "sm":  "0 1px 2px rgba(0,0,0,0.05)",
+    "md":  "0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1)",
+    "lg":  "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+    "xl":  "0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1)"
+  },
+  "layout": {
+    "sidebarWidth": 240,
+    "headerHeight": 64,
+    "inset": 16,
+    "gridUnit": 4,
+    "maxContentWidth": 1280
+  },
+  "breakpoint": {
+    "sm": 640,
+    "md": 768,
+    "lg": 1024,
+    "xl": 1280,
+    "2xl": 1536
+  }
+}

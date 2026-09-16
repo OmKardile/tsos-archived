@@ -9,55 +9,70 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
-val Slate900 = Color(0xFF0F172A)
-val Slate800 = Color(0xFF1E293B)
-val Slate700 = Color(0xFF334155)
-val Slate500 = Color(0xFF64748B)
-val Slate400 = Color(0xFF94A3B8)
-val Slate200 = Color(0xFFE2E8F0)
-val Slate100 = Color(0xFFF1F5F9)
-val Slate50 = Color(0xFFF8FAFC)
+// Cream palette
+val Cream50 = Color(0xFFFFF9F2)
+val Cream100 = Color(0xFFFFF1E6)
+val Cream200 = Color(0xFFF1E9E0)
+val Cream300 = Color(0xFFE9E0D6)
 
-val Emerald500 = Color(0xFF10B981)
-val Emerald600 = Color(0xFF059669)
-val Emerald700 = Color(0xFF047857)
+// Action (orange)
+val Action = Color(0xFFF97316)
+val ActionHover = Color(0xFFEA580C)
+val ActionActive = Color(0xFFC2410C)
+val ActionSoft = Color(0xFFFFF1E6)
 
-val Orange500 = Color(0xFFF97316)
-val Orange600 = Color(0xFFEA580C)
+// Status colors
+val StatusCompleted = Color(0xFF17803D)
+val StatusCompletedSoft = Color(0xFFE8F5EC)
+val StatusAttention = Color(0xFFB45309)
+val StatusAttentionSoft = Color(0xFFFFF4E5)
+val StatusDestructive = Color(0xFFB42318)
+val StatusDestructiveSoft = Color(0xFFFEF2F2)
+val StatusInfo = Color(0xFF2563EB)
+val StatusInfoSoft = Color(0xFFEFF6FF)
+val StatusAccent = Color(0xFF7C3AED)
+val StatusAccentSoft = Color(0xFFF5F3FF)
 
-val Red500 = Color(0xFFEF4444)
-val Red600 = Color(0xFFDC2626)
+// Text
+val TextPrimary = Color(0xFF1C1917)
+val TextSecondary = Color(0xFF57534E)
+val TextMuted = Color(0xFFA8A29E)
+val TextInverse = Color(0xFFFFFFFF)
 
-val Amber500 = Color(0xFFF59E0B)
+// Surface
+val Surface = Color(0xFFFFFFFF)
+val SurfaceHover = Color(0xFFFDF8F0)
+val Divider = Color(0xFFE7E5E4)
 
-val Purple500 = Color(0xFF8B5CF6)
-
-private val DarkColorScheme = darkColorScheme(
-    primary = Emerald500,
-    onPrimary = Color.White,
-    primaryContainer = Emerald700,
-    secondary = Orange500,
-    onSecondary = Color.White,
-    background = Slate900,
-    onBackground = Slate100,
-    surface = Slate800,
-    onSurface = Slate100,
-    surfaceVariant = Slate700,
-    onSurfaceVariant = Slate400,
-    error = Red500,
-    onError = Color.White,
+private val LightColorScheme = lightColorScheme(
+    primary = Action,
+    onPrimary = TextInverse,
+    primaryContainer = ActionSoft,
+    secondary = StatusCompleted,
+    onSecondary = TextInverse,
+    secondaryContainer = StatusCompletedSoft,
+    background = Cream50,
+    onBackground = TextPrimary,
+    surface = Surface,
+    onSurface = TextPrimary,
+    surfaceVariant = Cream200,
+    onSurfaceVariant = TextSecondary,
+    error = StatusDestructive,
+    onError = TextInverse,
+    errorContainer = StatusDestructiveSoft,
+    outline = Divider,
 )
 
 @Composable
 fun TSOSTheme(content: @Composable () -> Unit) {
-    val colorScheme = DarkColorScheme
+    val colorScheme = LightColorScheme
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Slate900.toArgb()
-            window.navigationBarColor = Slate900.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = false
+            window.statusBarColor = Cream50.toArgb()
+            window.navigationBarColor = Cream50.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }
 

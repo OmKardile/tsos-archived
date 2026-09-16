@@ -44,10 +44,10 @@ public partial class KDSPage : Page, IRefreshable
     {
         var bgColor = order.Status switch
         {
-            "new" => (Color)ColorConverter.ConvertFromString("#DBEAFE"),
-            "preparing" => (Color)ColorConverter.ConvertFromString("#FEF3C7"),
-            "ready" => (Color)ColorConverter.ConvertFromString("#D1FAE5"),
-            _ => (Color)ColorConverter.ConvertFromString("#F3F4F6"),
+            "new" => (Color)ColorConverter.ConvertFromString("#EFF6FF"),
+            "preparing" => (Color)ColorConverter.ConvertFromString("#FFF4E5"),
+            "ready" => (Color)ColorConverter.ConvertFromString("#E8F5EC"),
+            _ => (Color)ColorConverter.ConvertFromString("#F5F5F4"),
         };
 
         var border = new Border
@@ -66,7 +66,7 @@ public partial class KDSPage : Page, IRefreshable
             Text = order.OrderType.Replace("_", " ").ToUpper(),
             FontSize = 11,
             FontWeight = FontWeights.Bold,
-            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#92400E")),
+            Foreground = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#B45309")),
         });
 
         sp.Children.Add(new TextBlock

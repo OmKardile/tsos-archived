@@ -3,35 +3,79 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="Views/LoginWindow.xaml">
     <Application.Resources>
-        <!-- Colors -->
-        <Color x:Key="PrimaryColor">#059669</Color>
-        <Color x:Key="PrimaryDarkColor">#047857</Color>
-        <Color x:Key="BgColor">#F8FAFC</Color>
-        <Color x:Key="SidebarColor">#0F172A</Color>
-        <Color x:Key="CardColor">#FFFFFF</Color>
-        <Color x:Key="TextPrimary">#1E293B</Color>
-        <Color x:Key="TextSecondary">#64748B</Color>
-        <Color x:Key="BorderColor">#E2E8F0</Color>
-        <Color x:Key="DangerColor">#EF4444</Color>
-        <Color x:Key="WarningColor">#F59E0B</Color>
-        <Color x:Key="SuccessColor">#10B981</Color>
+        <!-- Cream Palette -->
+        <Color x:Key="Cream50Color">#FFF9F2</Color>
+        <Color x:Key="Cream100Color">#FFF1E6</Color>
+        <Color x:Key="Cream200Color">#F1E9E0</Color>
+        <Color x:Key="Cream300Color">#E9E0D6</Color>
+
+        <!-- Action (Orange) -->
+        <Color x:Key="ActionColor">#F97316</Color>
+        <Color x:Key="ActionHoverColor">#EA580C</Color>
+        <Color x:Key="ActionActiveColor">#C2410C</Color>
+        <Color x:Key="ActionSoftColor">#FFF1E6</Color>
+
+        <!-- Status -->
+        <Color x:Key="CompletedColor">#17803D</Color>
+        <Color x:Key="CompletedSoftColor">#E8F5EC</Color>
+        <Color x:Key="AttentionColor">#B45309</Color>
+        <Color x:Key="AttentionSoftColor">#FFF4E5</Color>
+        <Color x:Key="DestructiveColor">#B42318</Color>
+        <Color x:Key="DestructiveSoftColor">#FEF2F2</Color>
+        <Color x:Key="InfoColor">#2563EB</Color>
+        <Color x:Key="InfoSoftColor">#EFF6FF</Color>
+        <Color x:Key="AccentColor">#7C3AED</Color>
+        <Color x:Key="AccentSoftColor">#F5F3FF</Color>
+
+        <!-- Surface -->
+        <Color x:Key="BgColor">#FFF9F2</Color>
+        <Color x:Key="SurfaceColor">#FFFFFF</Color>
+        <Color x:Key="SurfaceHoverColor">#FDF8F0</Color>
+        <Color x:Key="DividerColor">#E7E5E4</Color>
+
+        <!-- Text -->
+        <Color x:Key="TextPrimaryColor">#1C1917</Color>
+        <Color x:Key="TextSecondaryColor">#57534E</Color>
+        <Color x:Key="TextMutedColor">#A8A29E</Color>
 
         <!-- Brushes -->
-        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource PrimaryColor}"/>
-        <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource PrimaryDarkColor}"/>
+        <SolidColorBrush x:Key="ActionBrush" Color="{StaticResource ActionColor}"/>
+        <SolidColorBrush x:Key="ActionHoverBrush" Color="{StaticResource ActionHoverColor}"/>
+        <SolidColorBrush x:Key="ActionSoftBrush" Color="{StaticResource ActionSoftColor}"/>
         <SolidColorBrush x:Key="BgBrush" Color="{StaticResource BgColor}"/>
-        <SolidColorBrush x:Key="SidebarBrush" Color="{StaticResource SidebarColor}"/>
-        <SolidColorBrush x:Key="CardBrush" Color="{StaticResource CardColor}"/>
-        <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimary}"/>
-        <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondary}"/>
-        <SolidColorBrush x:Key="BorderBrush" Color="{StaticResource BorderColor}"/>
-        <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DangerColor}"/>
-        <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource WarningColor}"/>
-        <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource SuccessColor}"/>
+        <SolidColorBrush x:Key="SurfaceBrush" Color="{StaticResource SurfaceColor}"/>
+        <SolidColorBrush x:Key="SurfaceHoverBrush" Color="{StaticResource SurfaceHoverColor}"/>
+        <SolidColorBrush x:Key="Cream200Brush" Color="{StaticResource Cream200Color}"/>
+        <SolidColorBrush x:Key="DividerBrush" Color="{StaticResource DividerColor}"/>
+        <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}"/>
+        <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}"/>
+        <SolidColorBrush x:Key="TextMutedBrush" Color="{StaticResource TextMutedColor}"/>
+        <SolidColorBrush x:Key="CompletedBrush" Color="{StaticResource CompletedColor}"/>
+        <SolidColorBrush x:Key="CompletedSoftBrush" Color="{StaticResource CompletedSoftColor}"/>
+        <SolidColorBrush x:Key="AttentionBrush" Color="{StaticResource AttentionColor}"/>
+        <SolidColorBrush x:Key="AttentionSoftBrush" Color="{StaticResource AttentionSoftColor}"/>
+        <SolidColorBrush x:Key="DestructiveBrush" Color="{StaticResource DestructiveColor}"/>
+        <SolidColorBrush x:Key="DestructiveSoftBrush" Color="{StaticResource DestructiveSoftColor}"/>
+        <SolidColorBrush x:Key="InfoBrush" Color="{StaticResource InfoColor}"/>
+        <SolidColorBrush x:Key="InfoSoftBrush" Color="{StaticResource InfoSoftColor}"/>
+        <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}"/>
+        <SolidColorBrush x:Key="AccentSoftBrush" Color="{StaticResource AccentSoftColor}"/>
+
+        <!-- Legacy aliases for backward compat -->
+        <Color x:Key="PrimaryColor">#F97316</Color>
+        <Color x:Key="PrimaryDarkColor">#EA580C</Color>
+        <Color x:Key="SuccessColor">#17803D</Color>
+        <Color x:Key="WarningColor">#B45309</Color>
+        <Color x:Key="DangerColor">#B42318</Color>
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource ActionColor}"/>
+        <SolidColorBrush x:Key="PrimaryDarkBrush" Color="{StaticResource ActionHoverColor}"/>
+        <SolidColorBrush x:Key="SuccessBrush" Color="{StaticResource CompletedColor}"/>
+        <SolidColorBrush x:Key="WarningBrush" Color="{StaticResource AttentionColor}"/>
+        <SolidColorBrush x:Key="DangerBrush" Color="{StaticResource DestructiveColor}"/>
 
         <!-- Button Style -->
         <Style x:Key="PrimaryButton" TargetType="Button">
-            <Setter Property="Background" Value="{StaticResource PrimaryBrush}"/>
+            <Setter Property="Background" Value="{StaticResource ActionBrush}"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -48,7 +92,7 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource PrimaryDarkBrush}"/>
+                                <Setter Property="Background" Value="{StaticResource ActionHoverBrush}"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter Property="Opacity" Value="0.5"/>
@@ -61,8 +105,8 @@
 
         <!-- Card Style -->
         <Style x:Key="CardBorder" TargetType="Border">
-            <Setter Property="Background" Value="{StaticResource CardBrush}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="Background" Value="{StaticResource SurfaceBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource DividerBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="CornerRadius" Value="12"/>
             <Setter Property="Padding" Value="20"/>
@@ -72,7 +116,7 @@
         <Style x:Key="InputField" TargetType="TextBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource DividerBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="White"/>
         </Style>
@@ -81,7 +125,7 @@
         <Style x:Key="PasswordField" TargetType="PasswordBox">
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Padding" Value="12,10"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource DividerBrush}"/>
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="Background" Value="White"/>
         </Style>

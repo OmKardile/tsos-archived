@@ -54,13 +54,13 @@ export default function ReportsPage() {
 
   useEffect(() => { load(); }, [activeLocationId, range]);
 
-  if (loading) return <div className="animate-pulse text-gray-400">Loading reports...</div>;
+  if (loading) return <div className="animate-pulse text-text-muted">Loading reports...</div>;
 
   const kpis = summary ? [
-    { label: 'Total Orders', value: summary.totalOrders, change: summary.ordersChange, icon: ShoppingBag, color: 'bg-blue-50 text-blue-600' },
-    { label: 'Revenue', value: `₹${summary.totalRevenue.toLocaleString('en-IN')}`, change: summary.revenueChange, icon: IndianRupee, color: 'bg-emerald-50 text-emerald-600' },
-    { label: 'Pending', value: summary.pendingOrders, change: null, icon: Clock, color: 'bg-amber-50 text-amber-600' },
-    { label: 'Customers', value: summary.totalCustomers, change: null, icon: Users, color: 'bg-purple-50 text-purple-600' },
+    { label: 'Total Orders', value: summary.totalOrders, change: summary.ordersChange, icon: ShoppingBag, color: 'bg-status-info-soft text-status-info' },
+    { label: 'Revenue', value: `₹${summary.totalRevenue.toLocaleString('en-IN')}`, change: summary.revenueChange, icon: IndianRupee, color: 'bg-status-completed-soft text-status-completed' },
+    { label: 'Pending', value: summary.pendingOrders, change: null, icon: Clock, color: 'bg-status-attention-soft text-status-attention' },
+    { label: 'Customers', value: summary.totalCustomers, change: null, icon: Users, color: 'bg-status-accent-soft text-status-accent' },
   ] : [];
 
   const maxRevenue = Math.max(...sales.map(s => Number(s.revenue)), 1);
@@ -68,14 +68,14 @@ export default function ReportsPage() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">Reports</h1>
+        <h1 className="text-2xl font-bold text-text-primary">Reports</h1>
         <div className="flex gap-2">
           {['week', 'month'].map(r => (
             <button
               key={r}
               onClick={() => setRange(r)}
               className={`px-3 py-1.5 text-sm font-medium rounded-lg transition ${
-                range === r ? 'bg-emerald-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                range === r ? 'bg-action text-white' : 'bg-surface border border-divider text-text-secondary hover:bg-cream-50'
               }`}
             >
               {r === 'week' ? 'This Week' : 'This Month'}
@@ -87,17 +87,17 @@ export default function ReportsPage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {kpis.map(kpi => (
-          <div key={kpi.label} className="bg-white border border-gray-200 rounded-xl p-5">
+          <div key={kpi.label} className="bg-surface border border-divider rounded-xl p-5">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm text-gray-500">{kpi.label}</span>
+              <span className="text-sm text-text-muted">{kpi.label}</span>
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${kpi.color}`}>
                 <kpi.icon className="w-5 h-5" />
               </div>
             </div>
             <div className="flex items-end gap-2">
-              <span className="text-2xl font-bold text-gray-900">{kpi.value}</span>
+              <span className="text-2xl font-bold text-text-primary">{kpi.value}</span>
               {kpi.change !== null && (
-                <span className={`text-xs font-medium mb-1 ${kpi.change >= 0 ? 'text-emerald-600' : 'text-red-500'}`}>
+                <span className={`text-xs font-medium mb-1 ${kpi.change >= 0 ? 'text-status-completed' : 'text-status-destructive'}`}>
                   {kpi.change >= 0 ? '+' : ''}{kpi.change}%
                 </span>
               )}
@@ -108,40 +108,40 @@ export default function ReportsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sales Chart */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Sales Trend</h2>
+        <div className="bg-surface border border-divider rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-text-primary mb-4">Sales Trend</h2>
           <div className="h-48 flex items-end gap-1">
             {sales.map((s, i) => (
               <div key={i} className="flex-1 flex flex-col items-center">
                 <div
-                  className="w-full bg-emerald-500 rounded-t"
+                  className="w-full bg-action rounded-t"
                   style={{ height: `${(Number(s.revenue) / maxRevenue) * 100}%`, minHeight: '4px' }}
                 />
-                <span className="text-[10px] text-gray-400 mt-1">{s.date?.slice(5)}</span>
+                <span className="text-[10px] text-text-muted mt-1">{s.date?.slice(5)}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Top Items */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Top Selling Items</h2>
+        <div className="bg-surface border border-divider rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-text-primary mb-4">Top Selling Items</h2>
           {topItems.length === 0 ? (
-            <p className="text-gray-500 text-sm">No data yet</p>
+            <p className="text-text-muted text-sm">No data yet</p>
           ) : (
             <div className="space-y-3">
               {topItems.map((item, i) => (
                 <div key={i} className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <span className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center text-xs font-medium text-gray-600">
+                    <span className="w-6 h-6 bg-cream-200 rounded-full flex items-center justify-center text-xs font-medium text-text-secondary">
                       {i + 1}
                     </span>
                     <div>
-                      <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                      <p className="text-xs text-gray-500">{item.total_qty} sold</p>
+                      <p className="text-sm font-medium text-text-primary">{item.name}</p>
+                      <p className="text-xs text-text-muted">{item.total_qty} sold</p>
                     </div>
                   </div>
-                  <span className="text-sm font-semibold text-gray-900">₹{Number(item.total_revenue).toFixed(0)}</span>
+                  <span className="text-sm font-semibold text-text-primary">₹{Number(item.total_revenue).toFixed(0)}</span>
                 </div>
               ))}
             </div>
