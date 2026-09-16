@@ -130,7 +130,7 @@ class AuthRepository @Inject constructor(
     }
 
     suspend fun getBaseUrl(): String {
-        return context.dataStore.data.map { it[BASE_URL_KEY] ?: "https://tsos-frontend.onrender.com/" }.first()
+        return context.dataStore.data.map { it[BASE_URL_KEY] ?: "https://tsos-backend.onrender.com/" }.first()
     }
 
     suspend fun initBaseUrl() {

@@ -13,7 +13,7 @@ import javax.inject.Singleton
 class RetrofitClient @Inject constructor(
     private val authInterceptor: AuthInterceptor
 ) {
-    private var baseUrl = "https://tsos-frontend.onrender.com/"
+    private var baseUrl = "https://tsos-backend.onrender.com/"
 
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
