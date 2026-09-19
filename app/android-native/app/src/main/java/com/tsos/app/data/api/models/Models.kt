@@ -228,7 +228,7 @@ data class PublicMenuResponse(
 )
 
 data class RestockRequest(
-    @SerializedName("ingredient_id") val ingredientId: String,
+    @SerializedName("ingredientId") val ingredientId: String,
     val qty: Double,
     val reason: String? = null
 )
