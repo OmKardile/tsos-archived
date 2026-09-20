@@ -1,0 +1,45 @@
+# TSOS — Supabase local-dev config
+# Start with: supabase start | Stop with: supabase stop
+
+project_id = "tsos"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[db.pooler]
+enabled = false
+
+[studio]
+enabled = true
+port = 54323
+api_url = "http://127.0.0.1:54321"
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+additional_redirect_urls = ["http://localhost:5173/**"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+
+[storage]
+enabled = true
+
+[realtime]
+enabled = true
+# Tables exposed over realtime are wired in migrations/0007_realtime.sql
+# (orders, order_items, ingredients, dine_tables, payments, loyalty_ledger).
+
+[functions]
+verify_jwt = true
